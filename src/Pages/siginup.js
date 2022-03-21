@@ -4,11 +4,11 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Snackbar from "@mui/material/Snackbar";
-import { getDatabase, ref, set } from "firebase/database";
 import * as React from "react";
 // import { useNavigate } from "react-router-dom";
 import signupImage from "../assets/login.png";
 import { useAuth } from "../context/authcontext";
+import addUser from "../Firebase/addUser";
 
 const Signup = () => {
   const [values, setValues] = React.useState({
@@ -45,17 +45,18 @@ const Signup = () => {
       setLoading(true);
 
       let userInfo = await signup(values.email, values.password);
-      console.log();
+
       await update(values.name);
-      const db = getDatabase();
-      const resultListRef = ref(db, `user/${userInfo.user.uid}`);
-      await set(resultListRef, {
-        email: userInfo.user.email,
-        name: userInfo.user.displayName,
-        friends: [],
-        hasFriendRequest: [],
-        groups: [],
-      });
+
+      const userData = {
+        uID: userInfo.user.uid,
+        uEmail: userInfo.user.email,
+        uName: userInfo.user.displayName,
+        following: [],
+        followers: [],
+      };
+
+      await addUser("users", userData, userInfo.user.uid);
 
       //   neviagate("/");
     } catch (error) {
