@@ -57,7 +57,7 @@ const Signup = () => {
       };
 
       await addUser("users", userData, userInfo.user.uid);
-
+      setLoading(false);
       //   neviagate("/");
     } catch (error) {
       console.log(error);

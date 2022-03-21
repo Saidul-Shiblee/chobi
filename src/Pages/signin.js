@@ -5,8 +5,8 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Snackbar from "@mui/material/Snackbar";
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import GI from "../assets/gi.png";
-// import { useNavigate } from "react-router-dom";
 import signinImage from "../assets/login.png";
 import { useAuth } from "../context/authcontext";
 
@@ -18,8 +18,9 @@ const Signin = () => {
   });
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState();
-  const { signin } = useAuth();
-  //   const neviagate = useNavigate();
+  const { signin, currentUser } = useAuth();
+  console.log(currentUser);
+  const neviagate = useNavigate();
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -38,7 +39,7 @@ const Signin = () => {
       setValues({ ...values, error: "" });
       setLoading(true);
       await signin(values.email, values.password);
-      //   neviagate("/");
+      neviagate("/timeline");
     } catch (error) {
       console.log(error);
       setLoading(false);

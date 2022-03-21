@@ -1,13 +1,44 @@
-import { Avatar, Box, Tooltip } from "@mui/material";
+import { Avatar, Box, Snackbar, Tooltip } from "@mui/material";
+import MuiAlert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/authcontext";
 
 const UserMenu = () => {
+  const { signout } = useAuth();
+  const neviagate = useNavigate();
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const [open, setOpen] = React.useState(false);
+
+  const [error, setError] = React.useState();
+
+  async function handleSignout() {
+    try {
+      setError("");
+      await signout();
+      neviagate("/signin");
+    } catch (error) {
+      setError(error.message);
+      return setOpen(true);
+    }
+    handleCloseUserMenu();
+  }
+
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenUserMenu = (event) => {
@@ -19,6 +50,17 @@ const UserMenu = () => {
   };
   return (
     <Box className="navItem">
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        sx={{ mt: "50px" }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          {error}
+        </Alert>
+      </Snackbar>
       <Box>
         <Tooltip title="Open settings">
           <IconButton onClick={handleOpenUserMenu}>
@@ -46,11 +88,15 @@ const UserMenu = () => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        {settings.map((setting) => (
-          <MenuItem key={setting} onClick={handleCloseUserMenu}>
-            <Typography textAlign="center">{setting}</Typography>
-          </MenuItem>
-        ))}
+        <MenuItem onClick={handleCloseUserMenu}>
+          <Typography textAlign="center">Profile</Typography>
+        </MenuItem>
+        <MenuItem onClick={handleCloseUserMenu}>
+          <Typography textAlign="center">Settings</Typography>
+        </MenuItem>
+        <MenuItem onClick={handleSignout}>
+          <Typography textAlign="center">Logout</Typography>
+        </MenuItem>
       </Menu>
     </Box>
   );
