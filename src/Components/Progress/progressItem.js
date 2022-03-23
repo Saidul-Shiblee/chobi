@@ -3,15 +3,16 @@ import { Box } from "@mui/material";
 import ImageListItem from "@mui/material/ImageListItem";
 import * as React from "react";
 import uid from "react-uuid";
+import { useAuth } from "../../context/authcontext";
 import addToDB from "../../Firebase/addtodb";
 import uploadFile from "../../Firebase/uplopadFile";
 import CircularProgressWithLabel from "./circularprogress";
 
 export default function ImagesList({ file }) {
-  console.log(file);
+  const { currentUser } = useAuth();
   const [progress, setProgress] = React.useState(0);
   const [imageURL, setImageURL] = React.useState(null);
-  const currentUser = { uid: "userID" };
+
   React.useEffect(() => {
     const imageName = uid() + "." + file.name.split(".").pop();
     const uploadImage = async () => {
@@ -27,9 +28,9 @@ export default function ImagesList({ file }) {
           imageURL: url,
           uID: currentUser.uid,
           caption: "",
-          uEmail: "",
-          uName: "",
-          uPhoto: "",
+          uEmail: currentUser.email,
+          uName: currentUser.displayName,
+          uPhoto: currentUser.photoURL,
           uLatitude: "",
           uLongitude: "",
         };

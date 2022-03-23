@@ -12,20 +12,19 @@ export default function Likes({ item }) {
       ? true
       : false
     : null;
-  console.log(likedPhoto);
+
   let [noOflikes, setNoOflikes] = React.useState(TotalnoOfLikes);
   const [toggleLiked, setToggleLiked] = React.useState(likedPhoto);
 
   const handleLikes = async () => {
     try {
       setToggleLiked((toggleLiked) => !toggleLiked);
-      console.log(toggleLiked);
+
       //
 
       await ToggleLikes("images", item.id, toggleLiked, currentUser.uid);
-      console.log(noOflikes);
+
       setNoOflikes((likes) => (toggleLiked ? likes - 1 : likes + 1));
-      console.log(noOflikes);
     } catch (error) {
       console.log(error);
     }

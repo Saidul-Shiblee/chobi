@@ -1,4 +1,7 @@
-import { Avatar, Box, Snackbar, Tooltip } from "@mui/material";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
+import SettingsInputSvideoRoundedIcon from "@mui/icons-material/SettingsInputSvideoRounded";
+import { Avatar, Box, Divider, Snackbar, Tooltip } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
@@ -36,7 +39,6 @@ const UserMenu = () => {
       setError(error.message);
       return setOpen(true);
     }
-    handleCloseUserMenu();
   }
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -89,12 +91,18 @@ const UserMenu = () => {
         onClose={handleCloseUserMenu}
       >
         <MenuItem onClick={handleCloseUserMenu}>
+          <AccountCircleOutlinedIcon sx={{ fontSize: "medium", mr: "10px" }} />
           <Typography textAlign="center">Profile</Typography>
         </MenuItem>
         <MenuItem onClick={handleCloseUserMenu}>
+          <SettingsInputSvideoRoundedIcon
+            sx={{ fontSize: "medium", mr: "10px" }}
+          />
           <Typography textAlign="center">Settings</Typography>
         </MenuItem>
+        <Divider />
         <MenuItem onClick={handleSignout}>
+          <ExitToAppOutlinedIcon sx={{ fontSize: "medium", mr: "10px" }} />
           <Typography textAlign="center">Logout</Typography>
         </MenuItem>
       </Menu>

@@ -5,13 +5,12 @@ import InputBase from "@mui/material/InputBase";
 import Paper from "@mui/material/Paper";
 import * as React from "react";
 import uid from "react-uuid";
+import { useAuth } from "../../context/authcontext";
 import addComment from "../../Firebase/addcomment";
 
 const PostCommentBox = ({ commentsRef, item }) => {
-  console.log(commentsRef);
   const [value, setValue] = React.useState("");
-  console.log(value);
-  const currentUser = { uid: "userID" };
+  const { currentUser } = useAuth();
   let cID = uid();
 
   const data = {
