@@ -19,7 +19,7 @@ export default function Post() {
   );
 
   return documents.map((item, index) => (
-    <Card sx={{ Width: 500, mb: "20px", flex: 1 }}>
+    <Card variant="outlined" sx={{ Width: 500, mb: "20px", flex: 1 }}>
       <PostHeader item={item} />
       <PostImage item={item} />
       <PostAction item={item} commentsRef={refs[index]} />

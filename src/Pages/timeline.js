@@ -1,15 +1,15 @@
-import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
 import * as React from "react";
 import FileUpLoader from "../Components/fileuploader";
 import ImageList from "../Components/imagelist copy";
+import MySidebar from "../Components/mysidebar.js";
 import NavBar from "../Components/navBar";
 
 export default function TimeLine() {
   return (
     <React.Fragment>
       <NavBar />
-      <Container
-        maxWidth="lg"
+      <Box
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -18,8 +18,32 @@ export default function TimeLine() {
         }}
       >
         <FileUpLoader />
-        <ImageList />
-      </Container>
+        <Box
+          sx={{
+            display: "flex",
+            width: "1200px",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <ImageList />
+          </Box>
+
+          <Box
+            sx={{
+              display: "flex",
+            }}
+          >
+            <MySidebar />
+          </Box>
+        </Box>
+      </Box>
     </React.Fragment>
   );
 }
