@@ -8,7 +8,7 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import GI from "../assets/gi.png";
 import signinImage from "../assets/login.png";
-import { useAuth } from "../context/authcontext";
+import { useAuth } from "../Context/authcontext";
 
 const Signin = () => {
   const [values, setValues] = React.useState({

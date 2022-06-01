@@ -1,10 +1,9 @@
-import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import { Box, Fab } from "@mui/material";
+import AddAPhotoOutlinedIcon from "@mui/icons-material/AddAPhotoOutlined";
 import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import * as React from "react";
 
-const FileUpLoaderForm = ({ files, setFiles }) => {
+const FileUpLoaderForm = ({ setImageURL, setFiles }) => {
   const [error, setError] = React.useState("");
   const [open, setOpen] = React.useState(false);
   //Supported files type
@@ -27,10 +26,16 @@ const FileUpLoaderForm = ({ files, setFiles }) => {
     } else {
       setError("");
       setFiles(selectedFiles);
+      const urls = [];
+      selectedFiles.forEach((selectedFile) => {
+        const url = URL.createObjectURL(selectedFile);
+        urls.push(url);
+      });
+      setImageURL(urls);
     }
   };
 
-  //function to get property of selected file
+  //function to get properties of selected file
   function getProperty(array, propertyName) {
     switch (propertyName) {
       case "size":
@@ -83,15 +88,7 @@ const FileUpLoaderForm = ({ files, setFiles }) => {
   });
 
   return (
-    <Box
-      container
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      sx={{ marginTop: "5px" }}
-      flexDirection="column"
-      zIndex="10"
-    >
+    <>
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         sx={{ mt: "50px" }}
@@ -106,17 +103,18 @@ const FileUpLoaderForm = ({ files, setFiles }) => {
       <input
         style={{ display: "none" }}
         accept="image/*"
-        id="contained-button-file"
+        id="for-post"
         multiple
         type="file"
         onChange={handleChange}
+        onClick={(event) => {
+          event.target.value = null;
+        }}
       />
-      <label htmlFor="contained-button-file">
-        <Fab component="span" color="primary">
-          <AddPhotoAlternateIcon />
-        </Fab>
+      <label htmlFor="for-post">
+        <AddAPhotoOutlinedIcon />
       </label>
-    </Box>
+    </>
   );
 };
 

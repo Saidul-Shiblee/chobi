@@ -3,10 +3,10 @@ import { Box } from "@mui/material";
 import ImageListItem from "@mui/material/ImageListItem";
 import * as React from "react";
 import uid from "react-uuid";
-import { useAuth } from "../../context/authcontext";
+import { useAuth } from "../../Context/authcontext";
 import addToDB from "../../Firebase/addtodb";
 import uploadFile from "../../Firebase/uplopadFile";
-import CircularProgressWithLabel from "./circularprogress";
+import CircularProgressWithLabel from "../Progress/circularprogress";
 
 export default function ImagesList({ file }) {
   const { currentUser } = useAuth();

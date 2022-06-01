@@ -5,7 +5,7 @@ import InputBase from "@mui/material/InputBase";
 import Paper from "@mui/material/Paper";
 import * as React from "react";
 import uid from "react-uuid";
-import { useAuth } from "../../context/authcontext";
+import { useAuth } from "../../Context/authcontext";
 import addComment from "../../Firebase/addcomment";
 
 const PostCommentBox = ({ commentsRef, item }) => {

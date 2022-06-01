@@ -9,7 +9,7 @@ export default function UserAvatar({ item }) {
       TransitionComponent={Zoom}
       title={item?.data?.uName || item?.data?.uEmail}
     >
-      <Avatar src={item?.data?.uPhoto} imgProps={{ "aria-hidden": true }} />
+      <Avatar src={item?.uPhoto} imgProps={{ "aria-hidden": true }} />
     </Tooltip>
   );
 }

@@ -1,4 +1,4 @@
-import CameraIcon from "@mui/icons-material/Camera";
+import CameraRoundedIcon from "@mui/icons-material/CameraRounded";
 import { Box } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Container from "@mui/material/Container";
@@ -7,6 +7,7 @@ import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
+import { useAuth } from "../Context/authcontext";
 import Account from "./NavItem/account";
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
@@ -20,10 +21,12 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 export default function NavBar() {
-  return (
+  const { currentUser } = useAuth();
+
+  return !currentUser ? null : (
     <>
       <StyledAppBar>
-        <Container maxWidth="lg" id="1111">
+        <Container maxWidth="lg">
           <Toolbar
             className="myToolbar"
             sx={{
@@ -33,7 +36,7 @@ export default function NavBar() {
             style={{ padding: "0px" }}
           >
             <IconButton size="large" edge="start" sx={{ mr: 2 }}>
-              <CameraIcon />
+              <CameraRoundedIcon />
             </IconButton>
             <Typography
               variant="h6"

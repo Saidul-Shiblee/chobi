@@ -1,12 +1,12 @@
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox";
-import useImage from "../hooks/useImage";
-import Comments from "./ImageItem/comments";
-import Likes from "./ImageItem/likes";
-import Options from "./ImageItem/options";
-import TimeStamp from "./ImageItem/timestamp";
-import UserAvatar from "./ImageItem/useravatar";
+import useImage from "../../Hooks/useImage";
+import Comments from "../ImageItem/comments";
+import Likes from "../ImageItem/likes";
+import Options from "../ImageItem/options";
+import TimeStamp from "../ImageItem/timestamp";
+import UserAvatar from "../ImageItem/useravatar";
 
 // function srcset(image, size, rows = 1, cols = 1) {
 //   return {
@@ -69,39 +69,37 @@ export default function ImagesList() {
   );
 }
 
-// const pattern = [
-
-// onClick={handleComment}
-//   {
-//     rows: 2,
-//     cols: 2,
-//   },
-//   {
-//     rows: 1,
-//     cols: 1,
-//   },
-//   {
-//     rows: 1,
-//     cols: 1,
-//   },
-//   {
-//     rows: 1,
-//     cols: 2,
-//   },
-//   {
-//     rows: 1,
-//     cols: 2,
-//   },
-//   {
-//     rows: 2,
-//     cols: 2,
-//   },
-//   {
-//     rows: 1,
-//     cols: 1,
-//   },
-//   {
-//     rows: 1,
-//     cols: 1,
-//   },
-// ];
+const pattern = [
+  {
+    rows: 2,
+    cols: 2,
+  },
+  {
+    rows: 1,
+    cols: 1,
+  },
+  {
+    rows: 1,
+    cols: 1,
+  },
+  {
+    rows: 1,
+    cols: 2,
+  },
+  {
+    rows: 1,
+    cols: 2,
+  },
+  {
+    rows: 2,
+    cols: 2,
+  },
+  {
+    rows: 1,
+    cols: 1,
+  },
+  {
+    rows: 1,
+    cols: 1,
+  },
+];

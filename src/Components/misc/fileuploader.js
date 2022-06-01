@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import * as React from "react";
+import FileUpLoaderForm from "../Uploader/fileuploaderform";
 import ProgressList from "./progresslist";
-import FileUpLoaderForm from "./Uploader/fileuploaderform";
 
 const FileUpLoader = () => {
   const [files, setFiles] = React.useState([]);

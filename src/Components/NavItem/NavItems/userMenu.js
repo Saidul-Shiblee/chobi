@@ -8,11 +8,12 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/authcontext";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../Context/authcontext";
 
 const UserMenu = () => {
-  const { signout } = useAuth();
+  const { signout, currentUser } = useAuth();
+
   const neviagate = useNavigate();
 
   const handleClose = (event, reason) => {
@@ -65,10 +66,9 @@ const UserMenu = () => {
       </Snackbar>
       <Box>
         <Tooltip title="Open settings">
-          <IconButton onClick={handleOpenUserMenu}>
+          <IconButton onClick={handleOpenUserMenu} size="small">
             <Avatar
-              alt="Remy Sharp"
-              src="/static/images/avatar/2.jpg"
+              src={currentUser.otherInfo[0].uPhoto}
               sx={{ width: "25px", height: "25px" }}
             />
           </IconButton>
@@ -92,16 +92,24 @@ const UserMenu = () => {
       >
         <MenuItem onClick={handleCloseUserMenu}>
           <AccountCircleOutlinedIcon sx={{ fontSize: "medium", mr: "10px" }} />
-          <Typography textAlign="center">Profile</Typography>
+
+          <Link
+            to={`profile/${currentUser.uid}`}
+            style={{ textDecoration: "none" }}
+          >
+            <Typography textAlign="center">Profile</Typography>
+          </Link>
         </MenuItem>
-        <MenuItem onClick={handleCloseUserMenu}>
+        <MenuItem onClick={handleCloseUserMenu} className="userMenu">
           <SettingsInputSvideoRoundedIcon
             sx={{ fontSize: "medium", mr: "10px" }}
           />
-          <Typography textAlign="center">Settings</Typography>
+          <Link to="accounts">
+            <Typography textAlign="center">Settings</Typography>
+          </Link>
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleSignout}>
+        <MenuItem onClick={handleSignout} className="userMenu">
           <ExitToAppOutlinedIcon sx={{ fontSize: "medium", mr: "10px" }} />
           <Typography textAlign="center">Logout</Typography>
         </MenuItem>

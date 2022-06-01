@@ -1,14 +1,17 @@
-import Message from "./message";
-import Notification from "./notification";
-import UserMenu from "./userMenu";
+import { Box } from "@mui/material";
+import AddPost from "./NavItems/addpost";
+import Explore from "./NavItems/explore";
+import Home from "./NavItems/home";
+import UserMenu from "./NavItems/userMenu";
 
 const Account = () => {
   return (
-    <>
-      <Message />
-      <Notification />
+    <Box sx={{ display: "flex" }}>
+      <Home />
+      <AddPost />
+      <Explore />
       <UserMenu />
-    </>
+    </Box>
   );
 };
 

@@ -1,4 +1,4 @@
-import { app } from "../Firebase/firebase";
+import { app } from "./firebase";
 
 export async function getUserByUserId(userId) {
   const result = await app

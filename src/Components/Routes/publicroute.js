@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../../context/authcontext";
+import { useAuth } from "../../Context/authcontext";
 
 const PublicRoute = ({ redirectPath = "/timeline", children }) => {
   const { currentUser } = useAuth();

@@ -1,6 +1,7 @@
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import * as React from "react";
 import { projectFirestore } from "../Firebase/firebase";
+import { getUserByUserId } from "../Firebase/getUserByUserId";
 
 const useComment = (collectionName, docID) => {
   const [comments, setComments] = React.useState([]);
@@ -13,12 +14,15 @@ const useComment = (collectionName, docID) => {
       );
       const unsubscribe = await onSnapshot(
         q,
-        (querySnapshot) => {
-          const results = [];
-          querySnapshot.forEach((result) => {
-            results.push({ id: result.id, data: result.data() });
-          });
-          setComments(results);
+        async (querySnapshot) => {
+          const user = Promise.all(
+            querySnapshot.docs.map(async (doc) => {
+              const data = doc.data();
+              const userInfo = await getUserByUserId(data.userID);
+              return { id: doc.id, data, user: userInfo[0] };
+            })
+          );
+          setComments(await user);
         },
         (error) => {
           alert(error.message);

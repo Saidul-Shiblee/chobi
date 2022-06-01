@@ -6,17 +6,20 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import * as React from "react";
-import deleFile from "../../Firebase/deleteFile";
+import { useAuth } from "../../Context/authcontext";
+import deleteFile from "../../Firebase/deleteFile";
 import deleteFromDB from "../../Firebase/deletefromdb";
+import { projectStorage } from "../../Firebase/firebase";
 
 export default function Options({ item }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const currentUser = { uid: "userID" };
+  const { currentUser } = useAuth();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
+  console.log();
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -24,7 +27,15 @@ export default function Options({ item }) {
   const handleDelete = async () => {
     try {
       await deleteFromDB("images", item.id);
-      await deleFile(`images/${currentUser.uid}/${item.id}`);
+
+      const imageURLS = !Array.isArray(item?.data?.imageURL)
+        ? [item?.data?.imageURL]
+        : item?.data?.imageURL;
+
+      imageURLS.forEach(async (URL) => {
+        let storageRef = projectStorage.refFromURL(URL);
+        await deleteFile(`images/${currentUser.uid}/${storageRef.name}`);
+      });
     } catch (error) {
       alert(error);
     }
@@ -32,11 +43,13 @@ export default function Options({ item }) {
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
-        <Tooltip title="Options">
-          <IconButton onClick={handleClick}>
-            <MoreVert fontSize="small" />
-          </IconButton>
-        </Tooltip>
+        {currentUser.uid === item.data.uID && (
+          <Tooltip title="Options">
+            <IconButton onClick={handleClick}>
+              <MoreVert fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        )}
       </Box>
       <Menu
         anchorEl={anchorEl}

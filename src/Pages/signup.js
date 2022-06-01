@@ -7,7 +7,7 @@ import Snackbar from "@mui/material/Snackbar";
 import * as React from "react";
 // import { useNavigate } from "react-router-dom";
 import signupImage from "../assets/login.png";
-import { useAuth } from "../context/authcontext";
+import { useAuth } from "../Context/authcontext";
 import addUser from "../Firebase/addUser";
 
 const Signup = () => {
@@ -51,9 +51,14 @@ const Signup = () => {
       const userData = {
         uID: userInfo.user.uid,
         uEmail: userInfo.user.email,
-        uName: userInfo.user.displayName,
+        name: userInfo.user.displayName,
+        uName: userInfo.user.email.split("@").shift(),
         following: [],
         followers: [],
+        website: "",
+        bio: "",
+        phoneNo: "",
+        gender: "",
       };
 
       await addUser("users", userData, userInfo.user.uid);
