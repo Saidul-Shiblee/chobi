@@ -40,13 +40,13 @@ export default function MultipleImageShow({ imgURL, open, handleClose }) {
           <ArrowBackIosNewIcon
             sx={arrow("left")}
             style={{
-              color: "white",
+              color: "rgba(255, 255, 255, 1.0)",
               background: "#383838",
               borderRadius: "50%",
               display: "block",
-              width: "32px",
-              height: "32px",
-              opacity: "0.8",
+              width: "25px",
+              height: "25px",
+              backgroundColor: "rgba(0, 0, 0, 0.3)",
             }}
             onClick={prevSlide}
           />
@@ -57,13 +57,13 @@ export default function MultipleImageShow({ imgURL, open, handleClose }) {
           <ArrowForwardIosIcon
             sx={arrow("right")}
             style={{
-              color: "white",
+              color: "rgba(255, 255, 255, 1.0)",
               background: "#383838",
               borderRadius: "50%",
               display: "block",
-              width: "32px",
-              height: "32px",
-              opacity: "0.8",
+              width: "25px",
+              height: "25px",
+              backgroundColor: "rgba(0, 0, 0, 0.3)",
             }}
             onClick={nextSlide}
           />
