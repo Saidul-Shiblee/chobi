@@ -9,8 +9,8 @@ It's online! chobi@test.com Feel free to sign up or alternatively you can login 
 
 The salient purpose of this project is to have firm grasp on below topics:
 
-1.React,React-Hooks.Custom Hooks,Context API.
-2.React Router DOM v6
+1.React,React-Hooks.Custom Hooks,Context API.<br />
+2.React Router DOM v6<br />
 3.Firebase
 
 Besides I have a plan to use this app to share photos of my family members by extending some of its feature.
