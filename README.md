@@ -1,3 +1,5 @@
+It's online! chobi@test.com Feel free to sign up or alternatively you can login with credential **user:test@test.com ,pw:test@123** and share some of your awasome picture
+
 # Introduction
 
 **chobi**-A photo sharing app bootstrapped with React and Firebase.
