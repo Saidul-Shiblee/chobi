@@ -1,11 +1,14 @@
+
+
+
 It's online! chobi@test.com Feel free to sign up or alternatively you can login with credential **user:test@test.com ,pw:test@123** and share some of your awasome picture
 
 # Introduction
 
-**chobi**-A photo sharing app bootstrapped with React and Firebase.
+**chobi**-A photo sharing app bootstrapped with ***<span style={color:red}>React </span>*** and ***Firebase***.
 
 
-## 🎯 Purpose of the Project
+# 🎯 Purpose of the Project
 
 The salient purpose of this project is learning.While building this app i tried to have a firm grasp on below topics:
 
@@ -15,7 +18,19 @@ The salient purpose of this project is learning.While building this app i tried 
 
 Besides I have a plan to use this app to share photos of my family members by extending some of its feature.
 
-### `npm start`
+# ⛲ Features
+
+💻 Existing Features:
+
+Google Secure Authentication 🔒
+
+Category-wise split 📫
+User Feed with infinite scroll 🤳🏻
+Ability to add both posts and comments. Creator can delete their own posts. Comments cannot be deleted by anyone. 📸
+Search functionality for Title and Description 🔎
+Download posts 📩
+Save posts into profile as pins 🏦
+"More like this" section shows similar images for more user engagement 📈
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
