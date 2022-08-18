@@ -61,7 +61,12 @@ IDE & Version Controlling: VS Code & Git <br/>
 2.I allready build an REST api with node.js for this project and will intiggrate it soon.
 
 
+# 😇 Chlallenges 
 
+The Most Two Exsiting challenges that i faced during building this projects are:
+
+1. Upload multiple pictures to firestore and get all the URLS of uploaded image.For one image it was easy but for multiple image it was not working as i am expected.
+So took the help of Frank van Puffelen(Google cloud Employee) and solved the problem accordingly.<a href=" https://stackoverflow.com/questions/71702368/why-promise-all-in-below-code-returning-an-empty-array">here</a> is the link to my stackoverflow post.
 
 
 
