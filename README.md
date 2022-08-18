@@ -7,7 +7,7 @@ It's online! chobi@test.com Feel free to sign up or alternatively you can login 
 
 ## 🎯 Purpose of the Project
 
-The salient purpose of this project is learning.While building this app i tried to a have firm grasp on below topics:
+The salient purpose of this project is learning.While building this app i tried to have a firm grasp on below topics:
 
 1.React,React-Hooks.Custom Hooks,Context API.<br />
 2.React Router DOM v6<br />
