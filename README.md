@@ -24,17 +24,20 @@ Besides I have a plan to use this app to share photos of my family members by ex
 
 User Need to create account and sign in to share photos. User can login via email and password as well as Google. User can also comment, like other user's post, follow and Un-follow other users, update his/her profile and profile picture.
 
-User sign Up
-User login with email and password.🔒
-User login with google. 🔒
-Upload Pictures with description.📸
-Edit a post
-Delete a post
-comment on a post
-
-View profile
-Edit own profile 
-Change password
+User sign Up <br />
+User login with email and password.🔒<br />
+User login with google. 🔒<br />
+Upload Pictures with description.📸<br />
+Edit a post<br />
+Delete a post<br />
+comment on a post<br />
+Like a post <br />
+Image slide show for multiple image <br />
+Follow user<br />
+Unfollow User<br />
+View profile <br />
+Edit own profile <br />
+Change password<br />
 
 
 
