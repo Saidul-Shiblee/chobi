@@ -32,11 +32,12 @@ Edit a post<br />
 Delete a post<br />
 comment on a post<br />
 Like a post <br />
-Image slide show for multiple image <br />
+Image slide show for multiple images <br />
 Follow user<br />
-Unfollow User<br />
+Unfollow user<br />
 View profile <br />
 Edit own profile <br />
+Change profile picture with crop image <br />
 Change password<br />
 
 
