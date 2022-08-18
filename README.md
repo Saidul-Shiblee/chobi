@@ -47,7 +47,7 @@ Login with facebook <br/>
 Nested comments <br/>
 More Reactions
 
-# 🎯 Technologies Used
+# 🧰 Technologies Used
 
 ## Exisiting Technologies:
 
