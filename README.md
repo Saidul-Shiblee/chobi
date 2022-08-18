@@ -22,7 +22,23 @@ Besides I have a plan to use this app to share photos of my family members by ex
 
 💻 Existing Features:
 
-Google Secure Authentication 🔒
+User Need to create account and sign in to share photos. User can login via email and password as well as Google. User can also comment, like other user's post, follow and Un-follow other users, update his/her profile and profile picture.
+
+User sign Up
+User login with email and password.🔒
+User login with google. 🔒
+Upload Pictures with description.📸
+Edit a post
+Delete a post
+comment on a post
+
+View profile
+Edit own profile 
+Change password
+
+
+
+
 
 Category-wise split 📫
 User Feed with infinite scroll 🤳🏻
