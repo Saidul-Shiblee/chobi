@@ -68,7 +68,7 @@ The most two exciting challenges that i faced during building this project are:
 
 ## First:
 Upload multiple pictures to firestore and get all the URLS of uploaded image.For one image it was easy but for multiple image it was not working as expected.
-So took the help of Frank van Puffelen(Google cloud Employee) and solved the problem accordingly. [**here**](https://stackoverflow.com/questions/71702368/why-promise-all-in-below-code-returning-an-empty-array) is the link to my stackoverflow post.
+So I took help from Frank van Puffelen(Google cloud Employee) and solved the problem accordingly. [**here**](https://stackoverflow.com/questions/71702368/why-promise-all-in-below-code-returning-an-empty-array) is the link to my stackoverflow post.
 
 ## Second:
 The second most exciting challenges that i faced, is while working on editing a post with multiple pictures. Because for a post with single image is easy enough to edit. But for multiple page i had to pull all the images from database populate them on the same modal that i used to for a new post and if user remove a picture from the list i had delete it before updating the post. However, though it took me some times to get around this but i solved that by myself.
