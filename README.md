@@ -1,6 +1,7 @@
-# Getting Started with Create React App
+# Introduction
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**chobi**-A photo sharing app bootstrapped with React and Firebase.
+
 
 ## Available Scripts
 
