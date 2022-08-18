@@ -59,7 +59,7 @@ IDE & Version Controlling: VS Code & Git <br/>
 ## 📱 Future plan to change in Technologies:
 
 1. State Management with Redux instead of context API.<br/>
-2. I already build an REST API with node.js for this project and will integrate it soon.
+2. I already built a REST API with node.js for this project and will integrate it soon.
 
 
 # 😇 Challenges:
