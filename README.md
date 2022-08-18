@@ -64,7 +64,7 @@ IDE & Version Controlling: VS Code & Git <br/>
 
 # 😇 Challenges:
 
-The Most Two Exsiting challenges that i faced during building this projects are:
+The most two exciting challenges that i faced during building this projects are:
 
 ## First:
 Upload multiple pictures to firestore and get all the URLS of uploaded image.For one image it was easy but for multiple image it was not working as i am expected.
