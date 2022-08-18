@@ -66,7 +66,7 @@ IDE & Version Controlling: VS Code & Git <br/>
 The Most Two Exsiting challenges that i faced during building this projects are:
 
 1. Upload multiple pictures to firestore and get all the URLS of uploaded image.For one image it was easy but for multiple image it was not working as i am expected.
-So took the help of Frank van Puffelen(Google cloud Employee) and solved the problem accordingly. [here](https://stackoverflow.com/questions/71702368/why-promise-all-in-below-code-returning-an-empty-array) is the link to my stackoverflow post.
+So took the help of Frank van Puffelen(Google cloud Employee) and solved the problem accordingly. [**here**](https://stackoverflow.com/questions/71702368/why-promise-all-in-below-code-returning-an-empty-array) is the link to my stackoverflow post.
 
 
 
