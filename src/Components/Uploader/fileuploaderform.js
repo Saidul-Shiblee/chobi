@@ -3,7 +3,7 @@ import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import * as React from "react";
 
-const FileUpLoaderForm = ({ setImageURL, setFiles }) => {
+const FileUpLoaderForm = ({ setImageURL, setFiles, files, imageURL }) => {
   const [error, setError] = React.useState("");
   const [open, setOpen] = React.useState(false);
   //Supported files type
@@ -12,7 +12,6 @@ const FileUpLoaderForm = ({ setImageURL, setFiles }) => {
   //Function to handle fille change
   const handleChange = (e) => {
     let selectedFiles = [...e.target.files];
-    console.log(selectedFiles);
     let noOfFiles = selectedFiles.length;
     // let totalFileSize = getProperty(selectedFiles, "size");
     let fileTypes = getProperty(selectedFiles, "type");
@@ -20,18 +19,17 @@ const FileUpLoaderForm = ({ setImageURL, setFiles }) => {
     let supportedTypes = chekForValidFileType(types, fileTypes);
 
     if (!supportedTypes || !noOfFiles) {
-      console.log(supportedTypes);
       setError("No file Selected or file type is not supported");
       return setOpen(true);
     } else {
       setError("");
-      setFiles(selectedFiles);
+      setFiles([...selectedFiles, ...files]);
       const urls = [];
       selectedFiles.forEach((selectedFile) => {
         const url = URL.createObjectURL(selectedFile);
         urls.push(url);
       });
-      setImageURL(urls);
+      setImageURL([...urls, ...imageURL]);
     }
   };
 

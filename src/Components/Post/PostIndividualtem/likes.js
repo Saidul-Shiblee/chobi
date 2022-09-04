@@ -1,8 +1,8 @@
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import * as React from "react";
-import ToggleLikes from "../../Firebase/togglelikes";
-import { useAuth } from "./../../Context/authcontext";
+import { useAuth } from "../../../Context/authcontext";
+import ToggleLikes from "../../../Firebase/toggleLikes";
 
 export default function Likes({ item }) {
   const { currentUser } = useAuth();
@@ -17,12 +17,11 @@ export default function Likes({ item }) {
   const [toggleLiked, setToggleLiked] = React.useState(likedPhoto);
 
   const handleLikes = async () => {
-    console.log("liked");
     try {
       setToggleLiked((toggleLiked) => !toggleLiked);
       await ToggleLikes("images", item.id, toggleLiked, currentUser.uid);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 

@@ -8,7 +8,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { useAuth } from "../Context/authcontext";
-import Account from "./NavItem/account";
+import Account from "./Nav/account";
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.common.white,
@@ -31,24 +31,33 @@ export default function NavBar() {
             className="myToolbar"
             sx={{
               display: "flex",
-              justifyContent: "end",
+              justifyContent: "space-between",
+              alignItems: "center",
             }}
-            style={{ padding: "0px" }}
           >
-            <IconButton size="large" edge="start" sx={{ mr: 2 }}>
-              <CameraRoundedIcon />
-            </IconButton>
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ flexGrow: 1, color: "rgba(0, 0, 0, 0.70)" }}
-            >
-              Chobi
-            </Typography>
             <Box
               sx={{
                 display: "flex",
-                justifyContent: "end",
+                justifyContent: "start",
+                alignItems: "center",
+              }}
+            >
+              <IconButton size="large" edge="start" sx={{ mr: 2 }}>
+                <CameraRoundedIcon />
+              </IconButton>
+              <Typography
+                variant="h6"
+                component="div"
+                sx={{ color: "rgba(0, 0, 0, 0.70)" }}
+              >
+                Chobi
+              </Typography>
+            </Box>
+
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
                 alignItems: "center",
               }}
             >

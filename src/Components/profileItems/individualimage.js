@@ -1,7 +1,7 @@
 import FilterNoneTwoToneIcon from "@mui/icons-material/FilterNoneTwoTone";
 import { Box } from "@mui/material";
 import * as React from "react";
-import MultipleImageShow from "./mulipleimageshow";
+import ImageSlideShow from "./imageSlideShow";
 
 const IndividualImage = ({ imageURL }) => {
   const [imgURL, setImgURL] = React.useState([]);
@@ -18,12 +18,17 @@ const IndividualImage = ({ imageURL }) => {
   };
 
   return (
-    <Box sx={{ position: "relative", width: "290px", height: "290px" }}>
+    <Box sx={{ position: "relative", width: "300px", height: "290px" }}>
       <img
         src={imageURL[0]}
         key={imageURL[0]}
         alt={imageURL[0]}
-        style={{ width: "290px", height: "290px", cursor: "pointer" }}
+        style={{
+          width: "300px",
+          height: "290px",
+          cursor: "pointer",
+          objectFit: "cover",
+        }}
         onClick={() => handleClickOpen(imageURL)}
       />
 
@@ -40,11 +45,7 @@ const IndividualImage = ({ imageURL }) => {
           }}
         />
       )}
-      <MultipleImageShow
-        imgURL={imgURL}
-        handleClose={handleClose}
-        open={open}
-      />
+      <ImageSlideShow imgURL={imgURL} handleClose={handleClose} open={open} />
     </Box>
   );
 };

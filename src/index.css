@@ -23,19 +23,12 @@ code {
   margin-right: -8px;
 }
 
-.slider {
-  position: relative;
-  width: 500px;
-  height: 630px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.image {
-  width: 500px;
-  height: 584px;
-  object-fit: cover;
+.image-slideshow {
+  width: auto;
+  height: auto;
+  max-width: 500px;
+  max-height: 584px;
+  object-fit: contain;
 }
 
 .right-arrow {
@@ -66,8 +59,8 @@ code {
 }
 
 .slide.activeSlide {
-  opacity: 1;
   transition-duration: 1s;
+  opacity: 1;
   transform: scale(1.08);
 }
 
@@ -92,7 +85,6 @@ code {
 
 .sliderProfile {
   position: relative;
-
   display: flex;
   justify-content: center;
   align-items: center;

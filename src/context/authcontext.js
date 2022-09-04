@@ -1,16 +1,22 @@
 import {
+  browserSessionPersistence,
   createUserWithEmailAndPassword,
   EmailAuthProvider,
+  getAuth,
+  GoogleAuthProvider,
   onAuthStateChanged,
   reauthenticateWithCredential,
+  setPersistence,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
   updatePassword,
   updateProfile,
 } from "firebase/auth";
 import React, { useContext, useEffect, useState } from "react";
 import { auth } from "../Firebase/firebase";
-import { getUserByUserId } from "../Firebase/getUserByUserId";
+// import getUserByUserId from "../Firebase/getUserByUserId";
+
 const Authcontext = React.createContext();
 
 export function useAuth() {
@@ -20,38 +26,42 @@ export function useAuth() {
 export function Authprovider({ children }) {
   const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState();
-  console.log(currentUser);
-  //useeffect
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      let otherInfo = await getUserByUserId(user.auth.currentUser.uid);
-
-      setCurrentUser({ ...user, otherInfo });
-
+      setCurrentUser(user);
       setLoading(false);
     });
-    return unsubscribe;
+    return () => unsubscribe;
   }, []);
 
   //signup function
 
   function signup(email, password) {
     return createUserWithEmailAndPassword(auth, email, password);
-
-    //update profile
   }
-
+  //update profile
   async function update(username) {
     await updateProfile(auth.currentUser, { displayName: username });
     let user = auth.currentUser;
+    setCurrentUser(user);
+  }
 
-    setCurrentUser({ ...user });
+  async function updateForGoogleLogin() {
+    await updateProfile(auth.currentUser);
+    let user = auth.currentUser;
+    setCurrentUser(user);
   }
 
   //signin function
   function signin(email, password) {
-    return signInWithEmailAndPassword(auth, email, password);
+    setPersistence(getAuth(), browserSessionPersistence)
+      .then(() => {
+        return signInWithEmailAndPassword(auth, email, password);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   }
 
   //signout function
@@ -76,6 +86,9 @@ export function Authprovider({ children }) {
       });
   }
 
+  const provider = new GoogleAuthProvider();
+  const signInWithGoogle = () => signInWithPopup(auth, provider);
+
   const value = {
     currentUser,
     signin,
@@ -83,6 +96,8 @@ export function Authprovider({ children }) {
     signup,
     update,
     changePassword,
+    signInWithGoogle,
+    updateForGoogleLogin,
   };
 
   return (

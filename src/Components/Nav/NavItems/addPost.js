@@ -2,7 +2,7 @@ import AddAPhotoOutlinedIcon from "@mui/icons-material/AddAPhotoOutlined";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import * as React from "react";
-import FileUpLoaderModal from "../../Uploader/fileuploadermodal";
+import FileUpLoaderModal from "../../Uploader/fileUploaderModal";
 
 export default function AddPost() {
   const [openUploader, setOpenUploader] = React.useState(false);
@@ -17,7 +17,7 @@ export default function AddPost() {
 
   return (
     <>
-      <Box className="navItem">
+      <Box className="navItem" sx={{ marginLeft: "10px" }}>
         <IconButton size="small" onClick={handleClickOpen}>
           <AddAPhotoOutlinedIcon />
         </IconButton>

@@ -1,7 +1,8 @@
 import Box from "@mui/material/Box";
 import * as React from "react";
-import ImageList from "../Components/imagelist copy";
-import MySidebar from "../Components/mysidebar.js";
+
+import AllPosts from "../Components/allPosts";
+import SideBar from "../Components/sideBar.js";
 
 export default function TimeLine() {
   return (
@@ -14,21 +15,25 @@ export default function TimeLine() {
       >
         <Box
           sx={{
-            flexGrow: 1,
-            maxWidth: "38%",
+            display: "flex",
+            flexDirection: "column",
+            width: "60%",
+            position: "relative",
           }}
         >
-          <ImageList />
+          <AllPosts />
         </Box>
         <Box
           sx={{
-            left: "70%",
-            position: "fixed",
-            ml: "30px",
-            mt: "30px",
+            display: "flex",
+            justifyContent: "start",
+            position: "relative",
+            width: "40%",
+            pl: "25px",
+            pt: "50px",
           }}
         >
-          <MySidebar sx={{ maxWidth: "300px" }} />
+          <SideBar />
         </Box>
       </Box>
     </React.Fragment>

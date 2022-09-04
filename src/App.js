@@ -2,10 +2,10 @@ import CssBaseline from "@mui/material/CssBaseline";
 import * as React from "react";
 import { Route, Routes } from "react-router-dom";
 import NavBar from "./Components/navBar";
-import ProtectedRoutes from "./Components/Routes/protectedroute";
-import PublicRoute from "./Components/Routes/publicroute";
-import ChangePassword from "./Components/Settings/changepassword";
-import ProfileEdit from "./Components/Settings/profileedit";
+import ProtectedRoutes from "./Components/Routes/protectedRoute";
+import PublicRoute from "./Components/Routes/publicRoute";
+import ChangePassword from "./Components/Settings/changePassword";
+import ProfileEdit from "./Components/Settings/profileEdit";
 import { Authprovider } from "./Context/authcontext";
 import Accounts from "./Pages/accounts";
 import Explore from "./Pages/explore";
@@ -33,8 +33,8 @@ export default function MyApp() {
             </Route>
           </Route>
           <Route element={<PublicRoute />}>
-            <Route path="/signup" element={<Signup />} />
             <Route path="/signin" element={<Signin />} />
+            <Route path="/signup" element={<Signup />} />
           </Route>
         </Routes>
       </Authprovider>

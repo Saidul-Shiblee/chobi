@@ -1,6 +1,9 @@
-import { Avatar, TextField } from "@mui/material";
+import { Avatar, Snackbar, TextField } from "@mui/material";
+import MuiAlert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
+import { green } from "@mui/material/colors";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
@@ -9,12 +12,11 @@ import * as React from "react";
 import uid from "react-uuid";
 import { useAuth } from "../../Context/authcontext";
 import { getUserByUserId } from "../../Firebase/getUserByUserId";
+import UpdateUser from "../../Firebase/updateUser";
 import uploadFile from "../../Firebase/uplopadFile";
 import MyCropper from "../Cropper/mycropper";
 import getCroppedImg from "../Cropper/Utils/cropimage";
-import UpdateUser from "./../../Firebase/updateUser";
 import filterObject from "./Utils/utils";
-
 const ProfileEdit = () => {
   const { currentUser } = useAuth();
   const [files, setFiles] = React.useState([]);
@@ -24,8 +26,10 @@ const ProfileEdit = () => {
   const [croppedImage, setCroppedImage] = React.useState(null);
   const [urls, Seturls] = React.useState([]);
   const [open, setOpen] = React.useState(null);
+  const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+  const [message, setMessage] = React.useState("");
   const [error, setError] = React.useState("");
-  const [loading, setLoading] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
   const [croppedAreaPixels, setCroppedAreaPixels] = React.useState(null);
 
   const onCropComplete = React.useCallback((croppedArea, croppedAreaPixels) => {
@@ -48,8 +52,7 @@ const ProfileEdit = () => {
         setLoading(true);
         setError("");
         const user = await getUserByUserId(currentUser.uid);
-        console.log(user);
-
+        setLoading(false);
         const filteredUser = filterObject(
           user,
           "bio",
@@ -61,7 +64,6 @@ const ProfileEdit = () => {
           "uPhoto"
         );
 
-        console.log(filteredUser);
         setValues(filteredUser);
       } catch (error) {
         setLoading(false);
@@ -77,12 +79,11 @@ const ProfileEdit = () => {
   const handleChange = (e) => {
     const { value, name } = e.target;
     setValues({ ...values, [name]: value });
-    setLoading(true);
   };
 
   const handleFiles = (e) => {
     let selectedFiles = [...e.target.files];
-    console.log(selectedFiles);
+
     setFiles(files);
     const urls = [];
     selectedFiles.forEach((selectedFile) => {
@@ -94,8 +95,11 @@ const ProfileEdit = () => {
   };
 
   const handleUpdate = async () => {
+    setLoading(true);
+    const result = await UpdateUser(currentUser.uid, values);
+    setMessage(result);
+    setSnackbarOpen(true);
     setLoading(false);
-    await UpdateUser(currentUser.uid, values);
   };
 
   const onClose = React.useCallback(() => {
@@ -106,27 +110,26 @@ const ProfileEdit = () => {
     setRotation(0);
     setZoom(1);
     URL.revokeObjectURL(urls);
-  }, []);
+  }, [urls]);
 
   const handleSave = async () => {
     try {
+      setLoading(true);
       const croppedImage = await getCroppedImg(
         urls,
         croppedAreaPixels,
         rotation
       );
-      // setCroppedImage(croppedImage);
       if (croppedImage == null) {
         throw new Error("No Files to Upload");
       }
 
-      setLoading(true);
       const fileInfo = [];
-      // console.log(croppedImage.file.name, );
+
       const file = croppedImage.file;
-      console.log(file);
+
       const imageName = uid() + "." + file.name.split(".").pop();
-      console.log(imageName);
+
       fileInfo.push({
         file,
         imageName,
@@ -137,16 +140,44 @@ const ProfileEdit = () => {
       setValues({ ...values, uPhoto: results[0] });
 
       await UpdateUser(currentUser.uid, { uPhoto: results[0] });
-
+      setLoading(false);
       setFiles([]);
       setOpen(false);
     } catch (e) {
-      console.error(e);
+      alert(e);
     }
   };
 
+  const handleSnackBarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackbarOpen(false);
+  };
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
   return (
     <Box>
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        sx={{ mt: "50px" }}
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackBarClose}
+      >
+        <Alert
+          onClose={handleSnackBarClose}
+          severity={
+            message === "Information Updated Successfully" ? "success" : "error"
+          }
+          sx={{ width: "100%" }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
       <Box
         sx={{
           display: "flex",
@@ -484,15 +515,40 @@ const ProfileEdit = () => {
               width: "80%",
             }}
           >
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              onClick={handleUpdate}
-              disabled={!loading}
+            <Box
+              sx={{
+                m: 1,
+                position: "relative",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "60%",
+              }}
             >
-              Save
-            </Button>
+              <Button
+                disabled={loading}
+                type="submit"
+                fullWidth
+                variant="contained"
+                onClick={handleUpdate}
+              >
+                Update
+              </Button>
+              {loading && (
+                <CircularProgress
+                  size={24}
+                  sx={{
+                    color: green[500],
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    marginTop: "-12px",
+                    marginLeft: "-12px",
+                  }}
+                />
+              )}
+            </Box>
+
             <MyCropper
               onCropComplete={onCropComplete}
               handleSave={handleSave}

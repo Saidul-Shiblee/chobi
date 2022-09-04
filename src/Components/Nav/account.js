@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import AddPost from "./NavItems/addpost";
+import AddPost from "./NavItems/addPost";
 import Explore from "./NavItems/explore";
 import Home from "./NavItems/home";
 import UserMenu from "./NavItems/userMenu";

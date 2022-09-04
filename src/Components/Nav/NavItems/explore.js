@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Explore = () => {
   return (
-    <Box className="navItem">
+    <Box className="navItem" sx={{ marginLeft: "10px" }}>
       <Link to="explore" style={{ textDecoration: "none" }}>
         <IconButton size="small">
           <ExploreOutlinedIcon />

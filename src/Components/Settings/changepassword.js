@@ -5,8 +5,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { deepOrange, green } from "@mui/material/colors";
 import Snackbar from "@mui/material/Snackbar";
 import * as React from "react";
+import { useAuth } from "../../Context/authcontext";
 import { getUserByUserId } from "../../Firebase/getUserByUserId";
-import { useAuth } from "./../../Context/authcontext";
 import filterObject from "./Utils/utils";
 
 const ChangePassword = () => {
@@ -20,7 +20,6 @@ const ChangePassword = () => {
     newPassword: "",
     confirmPassword: "",
   });
-  console.log(values);
 
   React.useEffect(() => {
     const fetchUser = async () => {
@@ -70,7 +69,7 @@ const ChangePassword = () => {
           oldPassword,
           newPassword
         );
-        console.log(result);
+
         setLoading(false);
         setMessage(result);
         setValues({
@@ -82,7 +81,7 @@ const ChangePassword = () => {
         setOpen(true);
       }
     } catch (error) {
-      console.log(error);
+      alert(error);
       setLoading(false);
     }
   };
@@ -296,25 +295,6 @@ const ChangePassword = () => {
             }}
           ></Box>
 
-          {/* <Box
-            
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "60%",
-            }}
-          >
-            <Button
-              disabled={loading}
-              type="submit"
-              fullWidth
-              variant="contained"
-              onClick={handlePasswordChange}
-            >
-              Change Password
-            </Button>
-          </Box> */}
           <Box
             sx={{
               m: 1,

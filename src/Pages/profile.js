@@ -1,12 +1,13 @@
 import { Box } from "@mui/material";
 import * as React from "react";
 import { useParams } from "react-router-dom";
+import ProfileBody from "../Components/ProfileItems/profileBody";
+import ProfileHeader from "../Components/ProfileItems/profileHeader";
 import useImage from "../Hooks/useImage";
-import ProfileBody from "./../Components/profileItems/profilebody";
-import ProfileHeader from "./../Components/profileItems/profileheader";
 
 const Profile = () => {
-  const { id } = useParams();
+  let { id } = useParams();
+
   const { documents } = useImage("users", id, "profile");
 
   return (

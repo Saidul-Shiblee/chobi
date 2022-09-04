@@ -5,9 +5,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Divider from "@mui/material/Divider";
 import * as React from "react";
 import { Link } from "react-router-dom";
+import AvatartWraper from "./../Post/PostIndividualtem/avatartWraper";
 const Suggestion = ({ currentUser, suggesttedFollower, handleFollow }) => {
-  console.log(suggesttedFollower);
-
   const [following, setFollowing] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const follow = async () => {
@@ -42,17 +41,19 @@ const Suggestion = ({ currentUser, suggesttedFollower, handleFollow }) => {
     >
       <Box sx={{ display: "flex", mb: "8px" }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Avatar
-            sx={{
-              bgcolor: deepOrange[500],
-              width: 24,
-              height: 24,
-              cursor: "pointer",
-            }}
-            src={suggesttedFollower.uPhoto}
-          >
-            {suggesttedFollower.uName.charAt(0)}
-          </Avatar>
+          <AvatartWraper outerRing={"28px"} innerRing={"26px"}>
+            <Avatar
+              sx={{
+                bgcolor: deepOrange[500],
+                width: 24,
+                height: 24,
+                cursor: "pointer",
+              }}
+              src={suggesttedFollower?.uPhoto}
+            >
+              {suggesttedFollower.uName.charAt(0)}
+            </Avatar>
+          </AvatartWraper>
         </Box>
         <Box
           sx={{
@@ -117,20 +118,31 @@ const Suggestion = ({ currentUser, suggesttedFollower, handleFollow }) => {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
+            width: "full",
+            height: "full",
+            px: "50px",
+            py: "50px",
           }}
         >
           <Box>
-            <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
+            <AvatartWraper outerRing={"48px"} innerRing={"43px"}>
+              <Avatar src={suggesttedFollower?.uPhoto}>
+                {" "}
+                {suggesttedFollower.uName.charAt(0)}
+              </Avatar>
+            </AvatartWraper>
           </Box>
           <Box>
-            <DialogTitle id="alert-dialog-title">
-              {`Unfollow ${suggesttedFollower.uName}`}
+            <DialogTitle id="alert-dialog-title" style={{ color: "#757575" }}>
+              {`Unfollow ${suggesttedFollower.uName} !`}
             </DialogTitle>
           </Box>
-          <Box>
+          <Box sx={{ py: "5px", fontSize: 12 }}>
             <Typography
+              variant="caption"
               sx={{
                 cursor: "pointer",
+                color: "#0288d1",
               }}
               onClick={unFollow}
             >
@@ -146,7 +158,9 @@ const Suggestion = ({ currentUser, suggesttedFollower, handleFollow }) => {
             <Typography
               sx={{
                 cursor: "pointer",
+                color: "#0288d1",
               }}
+              variant="caption"
               onClick={handleClose}
             >
               {" "}

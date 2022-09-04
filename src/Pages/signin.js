@@ -1,14 +1,15 @@
-import { Divider, Link, TextField, Typography } from "@mui/material";
+import { Divider, TextField, Typography } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Snackbar from "@mui/material/Snackbar";
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import GI from "../assets/gi.png";
 import signinImage from "../assets/login.png";
 import { useAuth } from "../Context/authcontext";
+import createUser from "../Firebase/createUser";
 
 const Signin = () => {
   const [values, setValues] = React.useState({
@@ -18,8 +19,8 @@ const Signin = () => {
   });
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState();
-  const { signin, currentUser } = useAuth();
-  console.log(currentUser);
+  const { signin, signInWithGoogle } = useAuth();
+
   const neviagate = useNavigate();
 
   const handleClose = (event, reason) => {
@@ -34,19 +35,49 @@ const Signin = () => {
   });
 
   async function handleSubmit(event) {
-    event.preventDefault();
     try {
       setValues({ ...values, error: "" });
       setLoading(true);
-      await signin(values.email, values.password);
-      neviagate("/timeline");
+      const loggedInUser = await signin(values.email, values.password);
+      if (loggedInUser) {
+        neviagate("/timeline");
+      }
     } catch (error) {
-      console.log(error);
       setLoading(false);
       setValues({ ...values, error: error.message });
       return setOpen(true);
     }
   }
+  async function handleGoogleSignIn(event) {
+    try {
+      let userInfo = await signInWithGoogle();
+
+      const userData = {
+        uID: userInfo?.user.uid,
+        uEmail: userInfo?.user.email,
+        name: userInfo?.user.displayName,
+        uName: userInfo?.user.email.split("@").shift(),
+        following: [
+          "yjeXL4DcO0eWUkY1uXHnKmZoHrB2",
+          "7LkEY0pMOlOrZeB6AwGib877tsk2",
+        ],
+        followers: [
+          "yjeXL4DcO0eWUkY1uXHnKmZoHrB2",
+          "k6jDg549PLb2pN4yosSnLDuOLx03",
+          "gKTnoveozXRuFIOmK6k4dOSQpx33",
+        ],
+        website: "",
+        bio: "",
+        phoneNo: "",
+        gender: "",
+      };
+
+      await createUser("users", userData, userInfo?.user.uid);
+      setLoading(false);
+      neviagate("/timeline");
+    } catch (error) {}
+  }
+
   const handleChange = (event) => {
     const { value, name } = event.target;
     setValues({ ...values, [name]: value });
@@ -102,12 +133,7 @@ const Signin = () => {
             <Typography component="h1" variant="h5">
               Chobi
             </Typography>
-            <Box
-              component="form"
-              noValidate
-              sx={{ mt: 1 }}
-              onSubmit={handleSubmit}
-            >
+            <Box component="form" noValidate sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -137,8 +163,10 @@ const Signin = () => {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 3, mb: 2, cursor: "pointer" }}
+                style={{}}
                 disabled={loading}
+                onClick={handleSubmit}
               >
                 Sign In
               </Button>
@@ -181,27 +209,28 @@ const Signin = () => {
                     src={GI}
                     alt={"google icon"}
                   />
-                  <Link
+                  <Typography
                     href="#"
                     variant="body1"
                     fontWeight="bold"
-                    style={{ textDecoration: "none", color: "#5F5F5F" }}
+                    style={{
+                      textDecoration: "none",
+                      color: "#5F5F5F",
+                      cursor: "pointer",
+                    }}
+                    onClick={handleGoogleSignIn}
                   >
                     Sign in with Google
-                  </Link>
+                  </Typography>
                 </Grid>
               </Grid>
 
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
+                  {/* <Link variant="body2">Forgot password?</Link> */}
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
+                  <Link to="/signup">Don't have an account? Sign Up </Link>
                 </Grid>
               </Grid>
             </Box>

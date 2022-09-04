@@ -1,7 +1,7 @@
 import CardHeader from "@mui/material/CardHeader";
-import Options from "../ImageItem/options";
-import TimeStamp from "../ImageItem/timestamp";
-import UserAvatar from "../ImageItem/useravatar";
+import Options from "./PostIndividualtem/options";
+import TimeStamp from "./PostIndividualtem/timeStamp";
+import UserAvatar from "./PostIndividualtem/userAvatar";
 
 const PostHeader = ({ item }) => {
   return (

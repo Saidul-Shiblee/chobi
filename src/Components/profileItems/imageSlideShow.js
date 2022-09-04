@@ -1,5 +1,5 @@
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import Slide from "@mui/material/Slide";
@@ -9,10 +9,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function MultipleImageShow({ imgURL, open, handleClose }) {
+export default function ImageSlideShow({ imgURL, open, handleClose }) {
   const [current, setCurrent] = React.useState(0);
   const length = imgURL.length;
-  console.log(imgURL);
 
   const nextSlide = () => {
     setCurrent(current === length - 1 ? 0 : current + 1);
@@ -37,7 +36,7 @@ export default function MultipleImageShow({ imgURL, open, handleClose }) {
     >
       <DialogContent style={{ overflow: "hidden", padding: "0px" }}>
         {length > 1 ? (
-          <ArrowBackIosNewIcon
+          <NavigateBeforeIcon
             sx={arrow("left")}
             style={{
               color: "rgba(255, 255, 255, 1.0)",
@@ -54,7 +53,7 @@ export default function MultipleImageShow({ imgURL, open, handleClose }) {
           ""
         )}
         {length > 1 ? (
-          <ArrowForwardIosIcon
+          <NavigateNextIcon
             sx={arrow("right")}
             style={{
               color: "rgba(255, 255, 255, 1.0)",
@@ -78,7 +77,7 @@ export default function MultipleImageShow({ imgURL, open, handleClose }) {
               key={index}
             >
               {index === current && (
-                <img src={slide} alt="" className="image" />
+                <img src={slide} alt="" className="image-slideshow" />
               )}
             </div>
           );
@@ -92,6 +91,7 @@ const arrow = (direction) => {
   return {
     position: "absolute",
     top: "50%",
+    translateY: "-50%",
     [direction]: "32px",
     fontSize: "1rem",
     color: "#000",

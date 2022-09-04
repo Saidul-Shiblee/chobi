@@ -2,11 +2,11 @@ import { Avatar, Box, Typography } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
 import * as React from "react";
 import { getUserByUserId } from "../../Firebase/getUserByUserId";
-import filterObject from "./../Settings/Utils/utils";
+import filterObject from "../Settings/Utils/utils";
 
 const ProfileHeader = ({ id, noOfPost }) => {
   const [user, setUser] = React.useState({});
-  console.log(user);
+
   React.useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -18,7 +18,7 @@ const ProfileHeader = ({ id, noOfPost }) => {
           "following",
           "followers"
         );
-        console.log(user);
+
         setUser(filteredUser);
       } catch (error) {
         alert(error);
@@ -63,7 +63,7 @@ const ProfileHeader = ({ id, noOfPost }) => {
               color: "rgba(0, 0, 0, 0.70)",
             }}
           >
-            {noOfPost} {noOfPost > 1 ? "posts" : "post"}
+            {noOfPost} {noOfPost > 1 ? "Posts" : "Post"}
           </Typography>
           <Typography
             sx={{
@@ -73,7 +73,7 @@ const ProfileHeader = ({ id, noOfPost }) => {
             }}
           >
             {user?.followers?.length}{" "}
-            {user?.followers?.length > 1 ? "followers" : "follower"}
+            {user?.followers?.length > 1 ? "Followers" : "Follower"}
           </Typography>
           <Typography
             sx={{
@@ -82,7 +82,7 @@ const ProfileHeader = ({ id, noOfPost }) => {
               color: "rgba(0, 0, 0, 0.70)",
             }}
           >
-            {user?.following?.length} following
+            {user?.following?.length} Following
           </Typography>
         </Box>
 

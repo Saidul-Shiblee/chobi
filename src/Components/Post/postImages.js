@@ -1,5 +1,7 @@
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+
+import { CardMedia } from "@mui/material";
 import * as React from "react";
 
 const PostImages = ({ item }) => {
@@ -22,20 +24,34 @@ const PostImages = ({ item }) => {
     return null;
   }
   return (
-    <div className="slider">
+    <>
       {imageURLS.length > 1 ? (
-        <ArrowBackIosNewIcon
+        <NavigateBeforeIcon
           sx={arrow("left")}
-          style={{ color: "white" }}
+          style={{
+            color: "white",
+            backgroundColor: "rgba(0,0,0,0.2)",
+            borderRadius: "50%",
+            width: "30px",
+            height: "30px",
+            padding: "4px",
+          }}
           onClick={prevSlide}
         />
       ) : (
         ""
       )}
       {imageURLS.length > 1 ? (
-        <ArrowForwardIosIcon
+        <NavigateNextIcon
           sx={arrow("right")}
-          style={{ color: "white" }}
+          style={{
+            color: "white",
+            backgroundColor: "rgba(0,0,0,0.2)",
+            borderRadius: "50%",
+            width: "30px",
+            height: "30px",
+            padding: "4px",
+          }}
           onClick={nextSlide}
         />
       ) : (
@@ -44,16 +60,22 @@ const PostImages = ({ item }) => {
 
       {imageURLS.map((slide, index) => {
         return (
-          <div
-            style={{ width: "500px", height: "584px" }}
-            className={index === current ? "slide activeSlide" : "slide"}
-            key={index}
-          >
-            {index === current && <img src={slide} alt="" className="image" />}
-          </div>
+          index === current && (
+            <CardMedia
+              image={slide}
+              key={index}
+              style={{
+                width: "500px",
+                height: "584px",
+                position: "absolute",
+                backgroundPosition: "center",
+                transitionDuration: " 1s ease",
+              }}
+            ></CardMedia>
+          )
         );
       })}
-    </div>
+    </>
   );
 };
 

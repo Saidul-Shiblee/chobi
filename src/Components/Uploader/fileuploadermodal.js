@@ -11,23 +11,32 @@ import TextField from "@mui/material/TextField";
 import * as React from "react";
 import uid from "react-uuid";
 import { useAuth } from "../../Context/authcontext";
-import addToDB from "../../Firebase/addtodb";
+import createPost from "../../Firebase/createPost";
+import { projectStorage, timestamp } from "../../Firebase/firebase";
+import UpdatePost from "../../Firebase/updatePost";
 import uploadFile from "../../Firebase/uplopadFile";
-import CircularProgressWithLabel from "../Progress/circularprogress";
-import FileUpLoaderForm from "./fileuploaderform";
+import CircularProgressWithLabel from "../Progress/circularProgress";
+import deleteFile from "./../../Firebase/deleteFile";
+import FileUpLoaderForm from "./fileUploaderForm";
 
 export default function FileUploderModal({
   openUploader,
-  handleClickOpen,
   handleClose,
+  postToEdit,
+  edit,
+  id,
 }) {
+  let initialImageURL = postToEdit?.imageURL ? postToEdit.imageURL : [];
+  let initialCaption = postToEdit?.caption ? postToEdit.caption : "";
+
   const { currentUser } = useAuth();
   const [files, setFiles] = React.useState([]);
-  const [imageURL, setImageURL] = React.useState([]);
-  const [caption, setCaption] = React.useState("");
+  const [imageURL, setImageURL] = React.useState(initialImageURL);
+  const [caption, setCaption] = React.useState(initialCaption);
   const [progress, setProgress] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
-  //
+  const [fileToDelete, setFileToDelet] = React.useState([]);
+
   const handleChange = (e) => {
     setCaption(e.target.value);
   };
@@ -45,8 +54,11 @@ export default function FileUploderModal({
   const removeImage = (index) => {
     let newImageURL = [...imageURL];
     let newFiles = [...files];
-    URL.revokeObjectURL(files[index]);
+    console.log(newFiles);
+    // URL.revokeObjectURL(files[index]);
     if (index !== -1) {
+      console.log(newImageURL[index]);
+      setFileToDelet([...fileToDelete, newImageURL[index]]);
       newImageURL.splice(index, 1);
       setImageURL(newImageURL);
       newFiles.splice(index, 1);
@@ -56,7 +68,7 @@ export default function FileUploderModal({
 
   //function to upload files and save the files to database
   const handleShare = async () => {
-    if (files.length === 0) {
+    if (!edit && files.length === 0) {
       throw new Error("No Files to Upload");
     }
     setLoading(true);
@@ -69,20 +81,54 @@ export default function FileUploderModal({
         path: `images/${currentUser.uid}`,
       });
     });
+    //upload files in both case of update and create
     let results = await uploadFile(fileInfo, setProgress);
+    console.log(results);
+    //delete files incase of update
 
-    const imgObj = {
-      imageURL: results,
-      uID: currentUser.uid,
-      caption: caption,
-      uEmail: currentUser.email,
-      uName: currentUser.displayName,
-      uPhoto: currentUser.photoURL,
-      uLatitude: "",
-      uLongitude: "",
-    };
+    if (edit) {
+      let filterFiletoDelete = [];
+      fileToDelete.forEach((image) => {
+        if (!image.startsWith("blob")) {
+          filterFiletoDelete.push(image);
+        }
+      });
 
-    await addToDB("images", imgObj, uid());
+      filterFiletoDelete.forEach(async (URL) => {
+        let storageRef = projectStorage.refFromURL(URL);
+        await deleteFile(`images/${currentUser.uid}/${storageRef.name}`);
+      });
+    }
+
+    //create new post
+    let filteredURL = [];
+    imageURL.forEach((image) => {
+      if (!image.startsWith("blob")) {
+        filteredURL.push(image);
+      }
+    });
+
+    let imgObj = edit
+      ? {
+          imageURL: [...filteredURL, ...results],
+          caption: caption,
+          updated: true,
+          timestamp,
+        }
+      : {
+          imageURL: results,
+          uID: currentUser.uid,
+          caption: caption,
+          uEmail: currentUser.email,
+          uName: currentUser.displayName,
+          uPhoto: currentUser.photoURL,
+          uLatitude: "",
+          uLongitude: "",
+        };
+
+    edit
+      ? await UpdatePost(id, imgObj)
+      : await createPost("images", imgObj, uid());
     setFiles([]);
   };
 
@@ -133,17 +179,19 @@ export default function FileUploderModal({
                   <FileUpLoaderForm
                     setFiles={setFiles}
                     setImageURL={setImageURL}
+                    files={files}
+                    imageURL={imageURL}
                   />
                 </IconButton>
               </Box>
               <Box>
                 <Button autoFocus color="inherit" onClick={handleShare}>
-                  Share
+                  {edit ? "UPDATE" : "SHARE"}
                 </Button>
               </Box>
             </Box>
-
-            {files.length > 0 && (
+            <Box></Box>
+            {(files.length > 0 || imageURL.length > 0) && (
               <Box sx={{ mb: "20px" }}>
                 <TextField
                   fullWidth
@@ -166,12 +214,16 @@ export default function FileUploderModal({
                       // srcSet={`${item}?w=248&fit=crop&auto=format&dpr=2 2x`}
                       alt={item}
                       loading="lazy"
-                      style={{ width: "175px", height: "175px" }}
+                      style={{
+                        width: "175px",
+                        height: "175px",
+                        objectFit: "cover",
+                      }}
                     />
                     <Box
                       sx={{
-                        top: 0,
-                        right: 5,
+                        top: 2,
+                        right: 9,
                         position: "absolute",
                         alignItems: "center",
                         justifyContent: "center",
@@ -179,11 +231,14 @@ export default function FileUploderModal({
                     >
                       <IconButton
                         edge="start"
-                        sx={{ color: "black" }}
+                        sx={{
+                          color: "White",
+                          backgroundColor: "rgb(0,0,0,.15)",
+                        }}
                         aria-label="close"
                         onClick={() => removeImage(index)}
                       >
-                        <CloseIcon />
+                        <CloseIcon fontSize="small" />
                       </IconButton>
                     </Box>
                   </ImageListItem>

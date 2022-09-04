@@ -1,11 +1,13 @@
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import { deepOrange } from "@mui/material/colors";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
+import spinner from "../assets/Spinner-small.svg";
 import { useAuth } from "../Context/authcontext";
 import { followsuggestion } from "../Firebase/followSuggestion";
-import { ToggleFollow } from "../Firebase/togglefollow";
+import { getUserByUserId } from "../Firebase/getUserByUserId";
+import { ToggleFollow } from "../Firebase/toggleFollow";
+import AvatartWraper from "./Post/PostIndividualtem/avatartWraper";
 import Suggestion from "./Sidebaritems/suggestion";
 
 export default function MySidebar() {
@@ -13,6 +15,7 @@ export default function MySidebar() {
   const [suggesttedFollowers, setSuggesttedFollowers] = React.useState([]);
   const [error, setError] = React.useState("");
   const { currentUser } = useAuth();
+  const [currentUserPhoto, setCurrentUserPhoto] = React.useState("");
 
   React.useEffect(() => {
     const getFollowers = async function () {
@@ -23,7 +26,7 @@ export default function MySidebar() {
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        console.error(error);
+
         setError(error);
       }
     };
@@ -34,17 +37,55 @@ export default function MySidebar() {
     };
   }, [currentUser.uid]);
 
+  React.useEffect(() => {
+    const getUserPhoto = async function () {
+      try {
+        setError("");
+        let user = await getUserByUserId(currentUser.uid);
+
+        setCurrentUserPhoto(user?.[0]?.uPhoto);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+
+        setError(error);
+      }
+    };
+    getUserPhoto();
+
+    return () => {
+      getUserPhoto();
+    };
+  }, [currentUser.uid]);
+
   const handleFollow = async (CUID, FUID) => {
     await ToggleFollow(CUID, FUID);
   };
 
   return loading ? (
-    "loading"
+    <Box
+      style={{
+        position: "absolute",
+        width: "100%",
+        height: "100vh",
+      }}
+    >
+      <img src={spinner} alt="Loading..." />
+    </Box>
   ) : (
-    <Box sx={{ display: "flex", flexDirection: "column", width: "280px" }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        width: "280px",
+        position: "fixed",
+      }}
+    >
       <Box sx={{ display: "flex", mb: "8px" }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Avatar sx={{ bgcolor: deepOrange[500] }}>S</Avatar>
+          <AvatartWraper outerRing={"48px"} innerRing={"43px"}>
+            <Avatar src={currentUserPhoto} imgProps={{ "aria-hidden": true }} />
+          </AvatartWraper>
         </Box>
         <Box
           sx={{
@@ -59,7 +100,7 @@ export default function MySidebar() {
             sx={{ fontSize: "12px", fontWeight: "bold", mb: "-4px" }}
             component="p"
           >
-            {currentUser.email}
+            {currentUser.email.split("@").shift()}
           </Typography>
           <Typography sx={{ fontSize: "10px", color: "#78909c" }} component="p">
             {currentUser.displayName}

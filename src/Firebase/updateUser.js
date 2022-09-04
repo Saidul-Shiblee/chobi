@@ -4,7 +4,12 @@ import filedToUpdate from "./Utils/utils";
 
 const UpdateUser = async (uID, data) => {
   const docRef = doc(projectFirestore, "users", uID);
-  await updateDoc(docRef, filedToUpdate(data));
+  try {
+    await updateDoc(docRef, filedToUpdate(data));
+    return "Information Updated Successfully";
+  } catch (error) {
+    return error.message;
+  }
 };
 
 export default UpdateUser;

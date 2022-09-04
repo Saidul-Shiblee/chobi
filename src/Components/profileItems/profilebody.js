@@ -3,10 +3,10 @@ import { Box, Chip, Divider } from "@mui/material";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import * as React from "react";
-import IndividualImage from "./individualimage";
+import IndividualImage from "./individualImage";
 const ProfileBody = ({ documents }) => {
   return (
-    <Box>
+    <Box sx={{ marginBottom: "30px" }}>
       <Divider
         sx={{ width: "100%", marginTop: "10px", marginBottom: "30px" }}
         flexItem
@@ -20,7 +20,7 @@ const ProfileBody = ({ documents }) => {
       </Divider>
       <ImageList cols={3} rowHeight={292} gap={30}>
         {documents.map((doc) => (
-          <ImageListItem>
+          <ImageListItem key={doc.data?.id}>
             <IndividualImage imageURL={doc.data.imageURL} />
           </ImageListItem>
         ))}

@@ -1,45 +1,29 @@
-import { Delete, MoreVert } from "@mui/icons-material";
+import { MoreVert } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import Box from "@mui/material/Box";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import * as React from "react";
-import { useAuth } from "../../Context/authcontext";
-import deleteFile from "../../Firebase/deleteFile";
-import deleteFromDB from "../../Firebase/deletefromdb";
-import { projectStorage } from "../../Firebase/firebase";
+import { useAuth } from "./../../../Context/authcontext";
+import Delete from "./delete";
+import Edit from "./edit";
 
 export default function Options({ item }) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+  const [anchorEl, setAnchorEl] = React.useState(false);
+
+  const menuOpen = Boolean(anchorEl);
+
   const { currentUser } = useAuth();
+
   const handleClick = (event) => {
+    handleClose();
     setAnchorEl(event.currentTarget);
   };
 
-  console.log();
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorEl(false);
   };
 
-  const handleDelete = async () => {
-    try {
-      await deleteFromDB("images", item.id);
-
-      const imageURLS = !Array.isArray(item?.data?.imageURL)
-        ? [item?.data?.imageURL]
-        : item?.data?.imageURL;
-
-      imageURLS.forEach(async (URL) => {
-        let storageRef = projectStorage.refFromURL(URL);
-        await deleteFile(`images/${currentUser.uid}/${storageRef.name}`);
-      });
-    } catch (error) {
-      alert(error);
-    }
-  };
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
@@ -53,9 +37,8 @@ export default function Options({ item }) {
       </Box>
       <Menu
         anchorEl={anchorEl}
-        open={open}
+        open={menuOpen}
         onClose={handleClose}
-        onClick={handleClose}
         PaperProps={{
           elevation: 0,
           sx: {
@@ -85,12 +68,8 @@ export default function Options({ item }) {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleDelete}>
-          <ListItemIcon>
-            <Delete />
-          </ListItemIcon>
-          Delete
-        </MenuItem>
+        <Delete item={item} currentUser={currentUser} />
+        <Edit item={item} currentUser={currentUser} />
       </Menu>
     </React.Fragment>
   );

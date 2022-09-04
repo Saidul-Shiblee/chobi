@@ -1,6 +1,6 @@
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import CardActions from "@mui/material/CardActions";
-import Likes from "../ImageItem/likes";
+import Likes from "./PostIndividualtem/likes";
 const PostAction = ({ commentsRef, item }) => {
   const focusInput = () => {
     commentsRef.current.focus();

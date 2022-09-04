@@ -5,23 +5,19 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Snackbar from "@mui/material/Snackbar";
 import * as React from "react";
-// import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import signupImage from "../assets/login.png";
 import { useAuth } from "../Context/authcontext";
-import addUser from "../Firebase/addUser";
+import createUser from "../Firebase/createUser";
+import useFormValidation from "../Hooks/useFormValidation";
 
 const Signup = () => {
-  const [values, setValues] = React.useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    error: "",
-  });
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState();
   const { signup, update } = useAuth();
-  //   const neviagate = useNavigate();
+  const [values, error, setError, handleChange, handleBlur, handleSubmit] =
+    useFormValidation(submit, setOpen);
+  const neviagate = useNavigate();
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -34,47 +30,43 @@ const Signup = () => {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-  async function handleSubmit(event) {
-    event.preventDefault();
-    if (values.password !== values.confirmPassword) {
-      setValues({ ...values, error: "Passwords don't match " });
-      return setOpen(true);
-    }
+  async function submit(event) {
     try {
-      setValues({ ...values, error: "" });
       setLoading(true);
-
       let userInfo = await signup(values.email, values.password);
-
       await update(values.name);
-
       const userData = {
-        uID: userInfo.user.uid,
-        uEmail: userInfo.user.email,
-        name: userInfo.user.displayName,
-        uName: userInfo.user.email.split("@").shift(),
-        following: [],
-        followers: [],
+        uID: userInfo?.user.uid,
+        uEmail: userInfo?.user.email,
+        name: userInfo?.user.displayName,
+        uName: userInfo?.user.email.split("@").shift(),
+        following: [
+          "yjeXL4DcO0eWUkY1uXHnKmZoHrB2",
+          "7LkEY0pMOlOrZeB6AwGib877tsk2",
+        ],
+        followers: [
+          "yjeXL4DcO0eWUkY1uXHnKmZoHrB2",
+          "k6jDg549PLb2pN4yosSnLDuOLx03",
+          "gKTnoveozXRuFIOmK6k4dOSQpx33",
+        ],
         website: "",
         bio: "",
         phoneNo: "",
         gender: "",
       };
 
-      await addUser("users", userData, userInfo.user.uid);
+      await createUser("users", userData, userInfo.user.uid);
       setLoading(false);
-      //   neviagate("/");
-    } catch (error) {
-      console.log(error);
+      neviagate("/timeline");
+    } catch (err) {
       setLoading(false);
-      setValues({ ...values, error: error.message });
+      setError({
+        ...error,
+        firebaseError: err.message,
+      });
       return setOpen(true);
     }
   }
-  const handleChange = (event) => {
-    const { value, name } = event.target;
-    setValues({ ...values, [name]: value });
-  };
 
   return (
     <Box
@@ -94,7 +86,9 @@ const Signup = () => {
         onClose={handleClose}
       >
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-          {values.error}
+          {Array.from(Object.values(error)).map((err, index) => (
+            <p key={index}> {err}</p>
+          ))}
         </Alert>
       </Snackbar>
       <Grid
@@ -136,55 +130,68 @@ const Signup = () => {
               sx={{ mt: 1 }}
             >
               <TextField
+                disabled={open}
                 margin="normal"
                 required
                 fullWidth
-                id="name"
-                label="name"
-                name="name"
+                id="userName"
+                label="User Name"
+                name="userName"
+                onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.name}
-                autoComplete="name"
-                autoFocus
+                value={values.userName}
+                autoComplete="userName"
               />
               <TextField
                 margin="normal"
+                disabled={open}
                 required
                 fullWidth
                 id="email"
                 label="Email Address"
                 name="email"
+                onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.email}
                 autoComplete="email"
-                autoFocus
               />
               <TextField
                 margin="normal"
+                disabled={open}
                 required
                 fullWidth
                 name="password"
                 label="Password"
                 type="password"
                 id="password"
+                onBlur={handleBlur}
                 autoComplete="current-password"
                 onChange={handleChange}
                 value={values.password}
               />
               <TextField
                 margin="normal"
+                disabled={open}
                 required
                 fullWidth
                 name="confirmPassword"
                 label="Confirm Password"
                 type="password"
                 id="Confirm Password"
+                onBlur={handleBlur}
                 autoComplete="current-password"
                 onChange={handleChange}
                 value={values.confirmPassword}
               />
               <Button
-                disabled={loading}
+                disabled={
+                  loading ||
+                  open ||
+                  !values.userName ||
+                  !values.email ||
+                  !values.password ||
+                  !values.confirmPassword
+                }
                 type="submit"
                 fullWidth
                 variant="contained"
@@ -194,6 +201,13 @@ const Signup = () => {
               </Button>
             </Box>
           </Box>
+
+          <Grid container>
+            <Grid item xs></Grid>
+            <Grid item>
+              <Link to="/signin">Already have an account? </Link>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </Box>

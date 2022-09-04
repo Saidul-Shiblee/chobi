@@ -11,6 +11,7 @@ import { getUserByUserId } from "../Firebase/getUserByUserId";
 
 const useImage = (collectionName = null, userID = null, purpose) => {
   const [documents, setDocuments] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
     async function getData() {
@@ -38,6 +39,7 @@ const useImage = (collectionName = null, userID = null, purpose) => {
         q,
         //get data on realtime
         async (querySnapshot) => {
+          setLoading(true);
           const user = Promise.all(
             querySnapshot.docs.map(async (doc) => {
               const data = doc.data();
@@ -46,6 +48,7 @@ const useImage = (collectionName = null, userID = null, purpose) => {
             })
           );
           setDocuments(await user);
+          setLoading(false);
         },
         (error) => {
           alert(error.message);
@@ -62,6 +65,7 @@ const useImage = (collectionName = null, userID = null, purpose) => {
 
   return {
     documents,
+    loading,
   };
 };
 

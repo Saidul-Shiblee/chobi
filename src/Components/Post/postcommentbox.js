@@ -6,7 +6,7 @@ import Paper from "@mui/material/Paper";
 import * as React from "react";
 import uid from "react-uuid";
 import { useAuth } from "../../Context/authcontext";
-import addComment from "../../Firebase/addcomment";
+import addComment from "../../Firebase/addComment";
 
 const PostCommentBox = ({ commentsRef, item }) => {
   const [value, setValue] = React.useState("");
@@ -23,7 +23,7 @@ const PostCommentBox = ({ commentsRef, item }) => {
       await addComment("images", data, item.id, cID);
       setValue("");
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 

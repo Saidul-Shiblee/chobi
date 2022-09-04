@@ -3,6 +3,7 @@ import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import SettingsInputSvideoRoundedIcon from "@mui/icons-material/SettingsInputSvideoRounded";
 import { Avatar, Box, Divider, Snackbar, Tooltip } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
+import { deepOrange } from "@mui/material/colors";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -10,11 +11,36 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../Context/authcontext";
+import { getUserByUserId } from "../../../Firebase/getUserByUserId";
+import AvatartWraper from "./../../Post/PostIndividualtem/avatartWraper";
 
 const UserMenu = () => {
   const { signout, currentUser } = useAuth();
+  const [currentUserPhoto, setCurrentUserPhoto] = React.useState("");
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState("");
+  const [open, setOpen] = React.useState(false);
 
   const neviagate = useNavigate();
+
+  React.useEffect(() => {
+    const getUserPhoto = async function () {
+      try {
+        setError("");
+        let user = await getUserByUserId(currentUser.uid);
+        setCurrentUserPhoto(user?.[0]?.uPhoto);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        setError(error);
+      }
+    };
+    getUserPhoto();
+
+    return () => {
+      getUserPhoto();
+    };
+  }, [currentUser.uid]);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -27,15 +53,11 @@ const UserMenu = () => {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-  const [open, setOpen] = React.useState(false);
-
-  const [error, setError] = React.useState();
-
   async function handleSignout() {
     try {
       setError("");
       await signout();
-      neviagate("/signin");
+      neviagate("/signin", { state: "open" });
     } catch (error) {
       setError(error.message);
       return setOpen(true);
@@ -67,10 +89,17 @@ const UserMenu = () => {
       <Box>
         <Tooltip title="Open settings">
           <IconButton onClick={handleOpenUserMenu} size="small">
-            <Avatar
-              src={currentUser.otherInfo[0].uPhoto}
-              sx={{ width: "25px", height: "25px" }}
-            />
+            <AvatartWraper outerRing={"28px"} innerRing={"26px"}>
+              <Avatar
+                sx={{
+                  bgcolor: deepOrange[500],
+                  width: 24,
+                  height: 24,
+                  cursor: "pointer",
+                }}
+                src={currentUserPhoto}
+              ></Avatar>
+            </AvatartWraper>
           </IconButton>
         </Tooltip>
       </Box>
