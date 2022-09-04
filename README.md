@@ -23,8 +23,6 @@ Besides I have a plan to use this app to share photos of my family members by ex
 
 ## 💻 Existing Features:
 
-User Need to create account and sign in to share photos. User can login via email and password as well as Google. User can also comment, like other user's post, follow and Un-follow other users, update his/her profile and profile picture.
-
 User sign Up <br />
 User login with email and password.🔒<br />
 User login with google. 🔒<br />
