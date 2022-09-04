@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+It's online! chobi@test.com Feel free to sign up or alternatively you can login with credential **user:test@test.com ,pw:test@123** and share some of your awesome picture
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Introduction
 
-## Available Scripts
+**chobi**-A photo sharing app bootstrapped with **_<span style={color:red}>React </span>_** and **_Firebase_**.
 
-In the project directory, you can run:
+# 🎯 Purpose of the Project
 
-### `npm start`
+The salient purpose of this project is learning. While building this app i tried to have a firm grasp on below topics:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. React, React-Hooks, Custom Hooks, Context API. <br />
+2. React Router DOM v6. <br />
+3. Firebase. <br />
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Besides I have a plan to use this app to share photos of my family members by extending some of its feature.
 
-### `npm test`
+# ⛲ Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 💻 Existing Features:
 
-### `npm run build`
+User sign Up <br />
+User login with email and password.🔒<br />
+User login with google. 🔒<br />
+Upload Pictures with description.📸<br />
+Edit a post<br />
+Delete a post<br />
+comment on a post<br />
+Like a post <br />
+Image slide show for multiple images <br />
+Follow user<br />
+Un-follow user<br />
+View profile <br />
+Edit own profile <br />
+Change profile picture with crop image <br />
+Change password<br />
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 💻 Features to be added:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Login with facebook <br/>
+Nested comments <br/>
+More Reactions
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# 🧰 Technologies Used:
 
-### `npm run eject`
+## 📱 Exisiting Technologies:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Front-end and Styling: HTML5, React,CSS3, Material UI <br/>
+Cloud Back-end Service: Firebase.<br/>
+IDE & Version Controlling: VS Code & Git <br/>
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 📱 Future plan to change in Technologies:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. State Management with Redux instead of context API.<br/>
+2. I already built a REST API with node.js for this project and will integrate it soon.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+# 😇 Challenges:
 
-## Learn More
+The most two exciting challenges that i faced during building this project are:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## First:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Upload multiple pictures to firestore and get all the URLS of uploaded image.For one image it was easy but for multiple image it was not working as expected.
+So I took help from Frank van Puffelen(Google cloud Employee) and solved the problem accordingly. [**here**](https://stackoverflow.com/questions/71702368/why-promise-all-in-below-code-returning-an-empty-array) is the link to my stackoverflow post.
 
-### Code Splitting
+## Second:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The second most exciting challenges that i faced, is while working on editing a post with multiple pictures. Because for a post with single image is easy enough to edit. But for multiple page i had to pull all the images from database populate them on the same modal that i used to for a new post and if user remove a picture from the list i had delete it before updating the post. However, though it took me some times to get around this but i solved that by myself.
