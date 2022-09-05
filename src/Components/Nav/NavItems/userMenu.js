@@ -24,11 +24,12 @@ const UserMenu = () => {
   const neviagate = useNavigate();
 
   React.useEffect(() => {
+    let isMounted = true;
     const getUserPhoto = async function () {
       try {
         setError("");
         let user = await getUserByUserId(currentUser.uid);
-        setCurrentUserPhoto(user?.[0]?.uPhoto);
+        if (isMounted) setCurrentUserPhoto(user?.[0]?.uPhoto);
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -38,7 +39,7 @@ const UserMenu = () => {
     getUserPhoto();
 
     return () => {
-      getUserPhoto();
+      isMounted = false;
     };
   }, [currentUser.uid]);
 

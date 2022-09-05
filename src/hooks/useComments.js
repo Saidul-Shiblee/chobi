@@ -7,6 +7,7 @@ const useComment = (collectionName, docID) => {
   const [comments, setComments] = React.useState([]);
 
   React.useEffect(() => {
+    let isMounted = true;
     async function getData() {
       const q = query(
         collection(projectFirestore, collectionName, docID, "comments"),
@@ -15,14 +16,15 @@ const useComment = (collectionName, docID) => {
       const unsubscribe = await onSnapshot(
         q,
         async (querySnapshot) => {
-          const user = Promise.all(
+          const results = Promise.all(
             querySnapshot.docs.map(async (doc) => {
               const data = doc.data();
               const userInfo = await getUserByUserId(data.userID);
               return { id: doc.id, data, user: userInfo[0] };
             })
           );
-          setComments(await user);
+          const postComments = await results;
+          if (isMounted) setComments(postComments);
         },
         (error) => {
           alert(error.message);
@@ -30,7 +32,7 @@ const useComment = (collectionName, docID) => {
       );
 
       return () => {
-        unsubscribe();
+        isMounted = false;
       };
     }
 

@@ -16,7 +16,7 @@ function srcset(image, size, rows = 1, cols = 1) {
 export default function QuiltedImageList() {
   const { documents } = useAllImages();
   return (
-    <Box paddingTop={"20px"} paddingX={"150px"}>
+    <Box paddingY={"50px"} paddingX={"150px"}>
       <ImageList variant="quilted" cols={4} rowHeight={300}>
         {documents.map((item, index) => (
           <ImageListItem

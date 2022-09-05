@@ -2,7 +2,7 @@ import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import spinner from "../assets/Spinner-small.svg";
+import spinner from "../assets/Spinner-Big.svg";
 import { useAuth } from "../Context/authcontext";
 import { followsuggestion } from "../Firebase/followSuggestion";
 import { getUserByUserId } from "../Firebase/getUserByUserId";
@@ -18,11 +18,12 @@ export default function MySidebar() {
   const [currentUserPhoto, setCurrentUserPhoto] = React.useState("");
 
   React.useEffect(() => {
+    let isMounted = true;
     const getFollowers = async function () {
       try {
         setError("");
         let users = await followsuggestion(currentUser.uid);
-        setSuggesttedFollowers(users);
+        if (isMounted) setSuggesttedFollowers(users);
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -33,17 +34,18 @@ export default function MySidebar() {
     getFollowers();
 
     return () => {
-      getFollowers();
+      isMounted = false;
     };
   }, [currentUser.uid]);
 
   React.useEffect(() => {
+    let isMounted = true;
     const getUserPhoto = async function () {
       try {
         setError("");
         let user = await getUserByUserId(currentUser.uid);
 
-        setCurrentUserPhoto(user?.[0]?.uPhoto);
+        if (isMounted) setCurrentUserPhoto(user?.[0]?.uPhoto);
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -54,7 +56,7 @@ export default function MySidebar() {
     getUserPhoto();
 
     return () => {
-      getUserPhoto();
+      isMounted = false;
     };
   }, [currentUser.uid]);
 
@@ -68,6 +70,7 @@ export default function MySidebar() {
         position: "absolute",
         width: "100%",
         height: "100vh",
+        left: "-40%",
       }}
     >
       <img src={spinner} alt="Loading..." />

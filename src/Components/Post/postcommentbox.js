@@ -18,7 +18,7 @@ const PostCommentBox = ({ commentsRef, item }) => {
     userID: currentUser.uid,
   };
 
-  const handleComment = async () => {
+  const handleComment = async (e) => {
     try {
       await addComment("images", data, item.id, cID);
       setValue("");
@@ -33,6 +33,7 @@ const PostCommentBox = ({ commentsRef, item }) => {
   };
   return (
     <Paper
+      onSubmit={(e) => e.preventDefault()}
       component="form"
       elevation={0}
       sx={{
@@ -51,7 +52,7 @@ const PostCommentBox = ({ commentsRef, item }) => {
       />
       <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
       <IconButton
-        onClick={handleComment}
+        onClick={(e) => handleComment(e)}
         color="primary"
         sx={{ p: "10px" }}
         aria-label="directions"

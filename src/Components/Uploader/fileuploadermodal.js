@@ -54,10 +54,7 @@ export default function FileUploderModal({
   const removeImage = (index) => {
     let newImageURL = [...imageURL];
     let newFiles = [...files];
-    console.log(newFiles);
-    // URL.revokeObjectURL(files[index]);
     if (index !== -1) {
-      console.log(newImageURL[index]);
       setFileToDelet([...fileToDelete, newImageURL[index]]);
       newImageURL.splice(index, 1);
       setImageURL(newImageURL);
@@ -83,7 +80,7 @@ export default function FileUploderModal({
     });
     //upload files in both case of update and create
     let results = await uploadFile(fileInfo, setProgress);
-    console.log(results);
+
     //delete files incase of update
 
     if (edit) {

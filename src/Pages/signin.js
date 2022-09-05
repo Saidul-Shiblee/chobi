@@ -35,9 +35,10 @@ const Signin = () => {
   });
 
   async function handleSubmit(event) {
+    event.preventDefault();
     try {
-      setValues({ ...values, error: "" });
       setLoading(true);
+      setValues({ ...values, error: "" });
       const loggedInUser = await signin(values.email, values.password);
       if (loggedInUser) {
         neviagate("/timeline");
@@ -133,7 +134,12 @@ const Signin = () => {
             <Typography component="h1" variant="h5">
               Chobi
             </Typography>
-            <Box component="form" noValidate sx={{ mt: 1 }}>
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 1 }}
+            >
               <TextField
                 margin="normal"
                 required

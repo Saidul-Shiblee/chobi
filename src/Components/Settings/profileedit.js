@@ -47,6 +47,7 @@ const ProfileEdit = () => {
   });
 
   React.useEffect(() => {
+    let isMounted = true;
     const fetchUser = async () => {
       try {
         setLoading(true);
@@ -64,7 +65,7 @@ const ProfileEdit = () => {
           "uPhoto"
         );
 
-        setValues(filteredUser);
+        if (isMounted) setValues(filteredUser);
       } catch (error) {
         setLoading(false);
         setError(error);
@@ -72,7 +73,7 @@ const ProfileEdit = () => {
     };
     fetchUser();
     return () => {
-      fetchUser();
+      isMounted = false;
     };
   }, [currentUser.uid]);
 

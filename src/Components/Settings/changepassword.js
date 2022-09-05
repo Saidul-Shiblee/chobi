@@ -22,18 +22,19 @@ const ChangePassword = () => {
   });
 
   React.useEffect(() => {
+    let isMounted = true;
     const fetchUser = async () => {
       try {
         const user = await getUserByUserId(currentUser.uid);
         const filteredUser = filterObject(user, "uName", "uPhoto");
-        setUser(filteredUser);
+        if (isMounted) setUser(filteredUser);
       } catch (error) {
         alert(error);
       }
     };
     fetchUser();
     return () => {
-      fetchUser();
+      isMounted = false;
     };
   }, [currentUser.uid]);
 
@@ -189,7 +190,7 @@ const ChangePassword = () => {
               value={values.oldPassword}
               onChange={handleChange}
               fullWidth
-              id="fullWidth"
+              id="fullWidth1"
               size="small"
             />
           </Box>
@@ -231,7 +232,7 @@ const ChangePassword = () => {
               value={values.newPassword}
               onChange={handleChange}
               fullWidth
-              id="fullWidth"
+              id="fullWidth2"
               size="small"
             />
           </Box>
@@ -271,7 +272,7 @@ const ChangePassword = () => {
               name="confirmPassword"
               value={values.confirmPassword}
               fullWidth
-              id="fullWidth"
+              id="fullWidth3"
               size="small"
               onChange={handleChange}
             />

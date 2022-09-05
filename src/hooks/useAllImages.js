@@ -6,6 +6,7 @@ const useAllImages = () => {
   const [documents, setDocuments] = React.useState([]);
 
   React.useEffect(() => {
+    let isMounted = true;
     async function getData() {
       const imageRef = collection(projectFirestore, "images");
       const unsubscribe = onSnapshot(
@@ -15,14 +16,14 @@ const useAllImages = () => {
           querySnapshot.forEach((result) => {
             results.push({ id: result.id, data: result.data() });
           });
-          setDocuments(results);
+          if (isMounted) setDocuments(results);
         },
 
         (error) => {
           alert(error.message);
         }
       );
-      return () => unsubscribe();
+      return () => (isMounted = false);
     }
     getData();
   }, []);

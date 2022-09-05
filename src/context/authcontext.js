@@ -15,7 +15,6 @@ import {
 } from "firebase/auth";
 import React, { useContext, useEffect, useState } from "react";
 import { auth } from "../Firebase/firebase";
-// import getUserByUserId from "../Firebase/getUserByUserId";
 
 const Authcontext = React.createContext();
 
@@ -36,7 +35,6 @@ export function Authprovider({ children }) {
   }, []);
 
   //signup function
-
   function signup(email, password) {
     return createUserWithEmailAndPassword(auth, email, password);
   }
@@ -54,14 +52,23 @@ export function Authprovider({ children }) {
   }
 
   //signin function
-  function signin(email, password) {
-    setPersistence(getAuth(), browserSessionPersistence)
-      .then(() => {
-        return signInWithEmailAndPassword(auth, email, password);
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
+  async function signin(email, password) {
+    try {
+      await setPersistence(getAuth(), browserSessionPersistence);
+      return signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      return error.message;
+    }
+  }
+  //signin with google function
+  async function signInWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    try {
+      await setPersistence(getAuth(), browserSessionPersistence);
+      return signInWithPopup(auth, provider);
+    } catch (error) {
+      return error.message;
+    }
   }
 
   //signout function
@@ -85,9 +92,6 @@ export function Authprovider({ children }) {
         return error.message;
       });
   }
-
-  const provider = new GoogleAuthProvider();
-  const signInWithGoogle = () => signInWithPopup(auth, provider);
 
   const value = {
     currentUser,

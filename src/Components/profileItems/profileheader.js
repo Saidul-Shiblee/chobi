@@ -8,6 +8,7 @@ const ProfileHeader = ({ id, noOfPost }) => {
   const [user, setUser] = React.useState({});
 
   React.useEffect(() => {
+    let isMounted = true;
     const fetchUser = async () => {
       try {
         const user = await getUserByUserId(id);
@@ -19,14 +20,14 @@ const ProfileHeader = ({ id, noOfPost }) => {
           "followers"
         );
 
-        setUser(filteredUser);
+        if (isMounted) setUser(filteredUser);
       } catch (error) {
         alert(error);
       }
     };
     fetchUser();
     return () => {
-      fetchUser();
+      isMounted = false;
     };
   }, [id]);
   return (

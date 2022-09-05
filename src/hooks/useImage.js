@@ -14,10 +14,10 @@ const useImage = (collectionName = null, userID = null, purpose) => {
   const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
+    let isMounted = true;
     async function getData() {
       const user = await getUserByUserId(userID);
       const data = user[0];
-
       const imageRef = collection(projectFirestore, "images");
       let q;
       switch (purpose) {
@@ -40,14 +40,15 @@ const useImage = (collectionName = null, userID = null, purpose) => {
         //get data on realtime
         async (querySnapshot) => {
           setLoading(true);
-          const user = Promise.all(
+          const results = Promise.all(
             querySnapshot.docs.map(async (doc) => {
               const data = doc.data();
               const userInfo = await getUserByUserId(data.uID);
               return { id: doc.id, data, uPhoto: userInfo[0].uPhoto };
             })
           );
-          setDocuments(await user);
+          const images = await results;
+          if (isMounted) setDocuments(images);
           setLoading(false);
         },
         (error) => {
@@ -56,7 +57,7 @@ const useImage = (collectionName = null, userID = null, purpose) => {
       );
 
       return () => {
-        unsubscribe();
+        isMounted = false;
       };
     }
 

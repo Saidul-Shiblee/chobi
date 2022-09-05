@@ -7,6 +7,7 @@ import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../Context/authcontext";
 import Account from "./Nav/account";
 
@@ -43,7 +44,10 @@ export default function NavBar() {
               }}
             >
               <IconButton size="large" edge="start" sx={{ mr: 2 }}>
-                <CameraRoundedIcon />
+                <Link to="/timeline">
+                  {" "}
+                  <CameraRoundedIcon />
+                </Link>
               </IconButton>
               <Typography
                 variant="h6"

@@ -19,8 +19,8 @@ const ProfileBody = ({ documents }) => {
         />
       </Divider>
       <ImageList cols={3} rowHeight={292} gap={30}>
-        {documents.map((doc) => (
-          <ImageListItem key={doc.data?.id}>
+        {documents.map((doc, index) => (
+          <ImageListItem key={index}>
             <IndividualImage imageURL={doc.data.imageURL} />
           </ImageListItem>
         ))}
