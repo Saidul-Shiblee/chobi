@@ -24,7 +24,7 @@ User login with google. 🔒<br />
 Upload Pictures with description.📸<br />
 Edit a post<br />
 Delete a post<br />
-comment on a post<br />
+Comment on a post<br />
 Like a post <br />
 Image slide show for multiple images <br />
 Follow user<br />
@@ -42,7 +42,7 @@ More Reactions
 
 # 🧰 Technologies Used:
 
-## 📱 Exisiting Technologies:
+## 📱 Existing Technologies:
 
 Front-end and Styling: HTML5, React,CSS3, Material UI <br/>
 Cloud Back-end Service: Firebase.<br/>
