@@ -1,4 +1,4 @@
-It's online! chobi@test.com Feel free to sign up or alternatively you can login with credential **user:test@test.com ,pw:test@123** and share some of your awesome picture
+It's online! https://ornate-raindrop-48a244.netlify.app/ Feel free to sign up or alternatively you can login with credential **user:test@test.com ,pw:Test@123** and share some of your awesome picture
 
 # Introduction
 
